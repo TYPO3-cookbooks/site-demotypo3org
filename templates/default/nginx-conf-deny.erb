@@ -1,0 +1,15 @@
+location ~* \.(log|sql)$ {
+        deny all;
+}
+
+location ~ ChangeLog$ {
+        deny all;
+}
+
+location ~ /\.svn|/\.git {
+        deny all;
+}
+
+location ~ /\.ht {
+        deny all;
+}

@@ -1,0 +1,26 @@
+<VirtualHost *:80>
+	ServerName <%= @server_name %>
+	#ServerAlias *.<%= @server_name %>
+	ServerAdmin admin@example.com
+	DocumentRoot "<%= @document_root %>"
+	DirectoryIndex "index.html" "index.php"
+	CustomLog "<%= @log_dir %>/access_log" combined
+	ErrorLog "<%= @log_dir %>/error_log"
+	ErrorDocument 404 /error/HTTP_NOT_FOUND.html.var
+	LogLevel warn
+	<Directory "<%= @document_root %>">
+		RedirectMatch permanent ^/login /typo3
+		AllowOverride All
+		<IfModule mod_dav.c>
+			DAV Off
+		</IfModule>
+		Options All -Includes -ExecCGI +MultiViews -Indexes
+	</Directory>
+	<IfModule mod_rewrite.c>
+		RewriteEngine On
+		RewriteCond %{REQUEST_METHOD} ^TRACE
+		RewriteRule .* - [F]
+		#RewriteCond %{HTTP_HOST} ^<%= @server_name %> [NC]
+		#RewriteRule ^(.*)$ http://www.%{HTTP_HOST}$1 [R=301,L]
+	</IfModule>
+</VirtualHost>

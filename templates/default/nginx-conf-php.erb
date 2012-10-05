@@ -1,0 +1,19 @@
+# pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
+#
+# Make sure to set cgi.fix_pathinfo = 0 in php.ini or check whether the file really exists.
+# See http://wiki.nginx.org/Pitfalls#Passing_Every_.7E_.5C.php.24_request_to_to_PHP
+# Otherwise you will end up in creating a security hole!
+#
+location ~ \.php$ {
+        if (!-f $request_filename) {
+                return 404;
+        }
+        fastcgi_pass 127.0.0.1:$phpFpmPort;
+
+        set $php_value "open_basedir='$document_root:/var/www/vhosts/$domain/www/:/var/www/vhosts/$domain/core/:/tmp'";
+        fastcgi_param PHP_VALUE $php_value;
+        #fastcgi_param FLOW3_REWRITEURLS 1;
+        #fastcgi_param FLOW3_CONTEXT Production;
+
+        include fastcgi_params;
+}
