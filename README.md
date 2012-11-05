@@ -21,10 +21,10 @@ This HTML block is for the welcome page of the introduction package::
 	  We also offer a demo of the <a href="http://government.v4.demo.typo3.org/home.html">TYPO3 Government Package</a> (German). The purpose is to demonstrate Frontend HTML5 and Accessibility features. Currently, it does <strong>not</strong> offer access to the Backend.
 	  </p>
 	
-	  <h2>So—what's next ?</h2>
+	  <h2>So - what's next ?</h2>
 	  <p id="gettingStartedStepOne">Grab a cup of coffee and start browsing through this site to learn why TYPO3 is the most powerful open source content management system.</p>
 	  <p id="gettingStartedStepTwo"><a href="###BACKEND_URL###" title="You can login as any of the backend users listed to the right." class="themeColorBackground startButton">Log into TYPO3</a></p>
-	  <p id="gettingStartedStepFurtherReading"> —<a href="http://typo3.org/community/">Get involved!</a></p>
+	  <p id="gettingStartedStepFurtherReading"> -<a href="http://typo3.org/community/">Get involved!</a></p>
 	</div>
 	
 	<script type="text/javascript">
