@@ -146,6 +146,20 @@ end
 
 
 ##########################################
+# Poor man's monitoring
+##########################################
+
+template "/root/check-demo.sh" do
+  source "check-demo.sh"
+  mode "0755"
+end
+
+cron "check-demo" do
+  minute "*"
+  command "/root/check-demo.sh > /dev/null"
+end
+
+##########################################
 # Website list
 ##########################################
 websites = %w{master.demo.typo3.org demo.typo3.org}
