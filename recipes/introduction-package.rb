@@ -34,17 +34,17 @@ script "install-typo3-core" do
     cd $home/home
 
     # Check the validity of the version
-    wget http://typo3.org/fileadmin/TYPO3_4-7/introductionpackage-4.7.0.tar.gz
-    tar -xzf introductionpackage-4.7.0.tar.gz
-    mv introductionpackage-4.7.0/* introductionpackage-4.7.0/.htaccess ../www/
-    rmdir introductionpackage-4.7.0
-    rm introductionpackage-*
+    wget http://get.typo3.org/introduction -O introduction-package.tar.gz
+    tar -xzf introduction-package.tar.gz
+    rm introduction-package.tar.gz
+    mv introduction* introduction-package
+    mv introduction-package/* introduction-package/.htaccess ../www/
+    rm -rf introduction*
 
     cd $home/www
-    rm -rf typo3_src-4.7.0 typo3_src
+    rm -rf typo3_src-6.0.0 typo3_src
     ln -s ../core/typo3_src.git typo3_src
     chmod -R 777 typo3temp typo3conf fileadmin uploads
-
   fi
 
   if [ ! -f $home/core/typo3_src.git ];
@@ -52,7 +52,7 @@ script "install-typo3-core" do
     cd $home/core
     git clone --recursive git://git.typo3.org/TYPO3v4/Core.git typo3_src.git
     cd $home/core/typo3_src.git
-    git checkout -b TYPO3_4-7 --track origin/TYPO3_4-7
+    git checkout -b TYPO3_6-0 --track origin/TYPO3_6-0
     git submodule update
   fi
 
@@ -109,26 +109,26 @@ mysqldump -u root -p#{node['mysql']['server_root_password']} masterdemot3org > /
 mysql -u root -p#{node['mysql']['server_root_password']} demot3org < /tmp/masterdemot3org.sql
 mysql -u root -p#{node['mysql']['server_root_password']} -e "UPDATE sys_domain SET domainName = REPLACE(domainName, 'master.demo.typo3.org', 'demo.typo3.org');" demot3org
 
-echo 'Remove localconf files that should not be synched...'
-rm -f $source/www/typo3conf/localconf.php
-rm -f $target/www/typo3conf/localconf.php
+echo 'Remove LocalConfiguration files that should not be synched...'
+rm -f $source/www/typo3conf/LocalConfiguration.php
+rm -f $target/www/typo3conf/LocalConfiguration.php
 
 echo 'Sync files...'
 rsync -qaEP --delete $source/core/ $target/core/
 rsync -qaEP --delete $source/www/ $target/www/
 
-echo 'Restore localconf files...'
-cp  /root/localconf.master.demo.typo3.org.php $source/www/typo3conf/localconf.php
-cp  /root/localconf.demo.typo3.org.php $target/www/typo3conf/localconf.php
+echo 'Restore LocalConfiguration files...'
+cp  /root/localconf.master.demo.typo3.org.php $source/www/typo3conf/LocalConfiguration.php
+cp  /root/localconf.demo.typo3.org.php $target/www/typo3conf/LocalConfiguration.php
 
 echo 'Set permissions...'
 chmod -R 755 $target/www/fileadmin/ $target/www/typo3conf/ $target/www/uploads/
 chown -R root:root $target/www $target/core
 
-#echo 'Update localconf...'
+#echo 'Update LocalConfiguration...'
 #cd $target/www/typo3conf
-#sed -i 's/masterdemot3org/demot3org/g' localconf.php
-#sed -i 's/#{node[:mysql][:users][:masterdemot3org][:password]}/#{node[:mysql][:users][:demot3org][:password]}/g' localconf.php
+#sed -i 's/masterdemot3org/demot3org/g' LocalConfiguration.php
+#sed -i 's/#{node[:mysql][:users][:masterdemot3org][:password]}/#{node[:mysql][:users][:demot3org][:password]}/g' LocalConfiguration.php
 
 echo 'Remove temp files...'
 rm -f $source/www/typo3conf/temp*
