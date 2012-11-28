@@ -122,7 +122,7 @@ cp  /root/localconf.master.demo.typo3.org.php $source/www/typo3conf/LocalConfigu
 cp  /root/localconf.demo.typo3.org.php $target/www/typo3conf/LocalConfiguration.php
 
 echo 'Set permissions...'
-chmod -R 755 $target/www/fileadmin/ $target/www/typo3conf/ $target/www/uploads/
+chmod -R 0777 $target/www/fileadmin/ $target/www/typo3conf/ $target/www/uploads/
 chown -R root:root $target/www $target/core
 
 #echo 'Update LocalConfiguration...'
