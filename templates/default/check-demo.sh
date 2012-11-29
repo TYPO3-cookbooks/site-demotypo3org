@@ -40,7 +40,9 @@ do
     if [ -z "$content" ]; then
         echo "Empty content for $i. Resetting website..."
         $home/reset-demo.sh
-        touch $log/check-demo-incident-`date +"%m-%d-%y-%T"`
+
+        # Log incident
+        echo $i > $log/check-demo-incident-`date +"%m-%d-%y-%T"`
         break
     else
         echo "Check OK $i"
