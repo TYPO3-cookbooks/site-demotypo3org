@@ -64,6 +64,8 @@ script "update-repository" do
   user "masterdemotypo3org"
   code <<-EOF
     cd /var/www/vhosts/master.demo.typo3.org/core/typo3_src.git
+    git reset --hard
+    git checkout TYPO3_6-0
     git pull
     git submodule update
   EOF
@@ -118,11 +120,13 @@ rsync -qaEP --delete $source/core/ $target/core/
 rsync -qaEP --delete $source/www/ $target/www/
 
 echo 'Restore LocalConfiguration files...'
-cp  /root/localconf.master.demo.typo3.org.php $source/www/typo3conf/LocalConfiguration.php
-cp  /root/localconf.demo.typo3.org.php $target/www/typo3conf/LocalConfiguration.php
+cp  /root/LocalConfiguration.master.demo.typo3.org.php $source/www/typo3conf/LocalConfiguration.php
+cp  /root/LocalConfiguration.demo.typo3.org.php $target/www/typo3conf/LocalConfiguration.php
+cp  /root/introduction.ext_localconf.php $target/www/typo3conf/ext/introduction/ext_localconf.php
 
 echo 'Set permissions...'
-chmod -R 0777 $target/www/fileadmin/ $target/www/typo3conf/ $target/www/uploads/
+chmod -R 0777 $target/www/fileadmin/ $target/www/uploads/
+chmod -R 0755 $target/www/typo3conf/
 chown -R root:root $target/www $target/core
 
 #echo 'Update LocalConfiguration...'
@@ -139,7 +143,11 @@ echo 'Disable master virtual host...'
 #service nginx reload
 
 rm -f /etc/apache2/sites-enabled/master.demo.typo3.org
-service apache2 reload
+# reload does not work if the server is stop
+/usr/sbin/service apache2 restart
+
+# In case we must log the reset
+# touch /var/log/demo/reset-`date +"%m-%d-%y-%T"`
 EOF
 
 end
@@ -159,8 +167,22 @@ cron "check-demo" do
   command "/root/check-demo.sh > /dev/null"
 end
 
+
 ##########################################
-# Website list
+# Write hook file
+##########################################
+
+# Hook for TCEMain
+template "introduction.ext_localconf.php" do
+  path "/root/introduction.ext_localconf.php"
+  source "typo3-introduction-LocalConfiguration.erb"
+  owner "root"
+  group "root"
+  mode 0777
+end
+
+##########################################
+# Write local configuration file
 ##########################################
 websites = %w{master.demo.typo3.org demo.typo3.org}
 
@@ -168,9 +190,9 @@ websites = %w{master.demo.typo3.org demo.typo3.org}
 websites.each_with_index do |host, index|
 
   # Nginx virtual host configuration
-  template "localconf-#{host}" do
-    path "/root/localconf.#{host}.php"
-    source "typo3-localconf.erb"
+  template "LocalConfiguration-#{host}" do
+    path "/root/LocalConfiguration.#{host}.php"
+    source "typo3-LocalConfiguration.erb"
     owner "root"
     group "root"
     mode 0644
@@ -188,7 +210,8 @@ websites.each_with_index do |host, index|
     variables(
       :username => "#{username}",
       :password => "#{password}",
-      :database => "#{database}"
+      :database => "#{database}",
+      :host => "#{host}"
     )
   end
 
@@ -206,7 +229,6 @@ file "/root/enable-master.sh" do
   mode "0755"
   action :create
   content <<-EOF
-
 #!/bin/sh
 
 #ln -s /etc/nginx/sites-available/master.demo.typo3.org /etc/nginx/sites-enabled/master.demo.typo3.org
@@ -221,9 +243,16 @@ end
 ######################################
 # SCHEDULE RESET SCRIPT
 ######################################
+directory "/var/log/demo" do
+  owner "root"
+  group "root"
+  mode "0755"
+  action :create
+end
+
 cron "reset-demo" do
   hour "0,3,6,9,12,15,18,21"
   minute "0"
-  command "/root/reset-demo.sh > /root/reset-demo.log"
+  command "/root/reset-demo.sh > /var/log/demo/reset-demo.log"
 end
 

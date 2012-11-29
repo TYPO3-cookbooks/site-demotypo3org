@@ -4,7 +4,7 @@ if (!defined ('TYPO3_MODE')) {
 }
 
 // Hook to avoid reseting BE passwords
-$TYPO3_CONF_VARS['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processDatamapClass'][] = 'tx_speciality_tcehook';
+// $TYPO3_CONF_VARS['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processDatamapClass'][] = 'tx_speciality_tcehook';
 
 /**
  * TCE hook handling
@@ -132,7 +132,7 @@ return array(
 		),
 	),
 	'FE' => array(
-		'pageNotFound_handling' => 'http://master.demo.typo3.org/index.php?id=16',
+		'pageNotFound_handling' => 'http://<%= @host %>/index.php?id=16',
 	),
 	'GFX' => array(
 		'gdlib_png' => 1,
@@ -153,3 +153,4 @@ return array(
 );
 
 ?>
+

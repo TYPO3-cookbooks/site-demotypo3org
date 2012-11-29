@@ -1,5 +1,13 @@
 #!/bin/bash
 
+home=$(dirname $0)
+log="/var/log/demo"
+
+if [ ! -d $log ];
+then
+    mkdir $log
+fi
+
 links=(
     "/"
     "/about-typo3/history/"
@@ -28,10 +36,13 @@ links=(
 )
 for i in "${links[@]}"
 do
-    content=`curl -s -L http://demo.typo3.org | grep "Powered by"`
+    content=`curl -s -L http://demo.typo3.org$i | grep "Powered by"`
     if [ -z "$content" ]; then
         echo "Empty content for $i. Resetting website..."
-        curl -s -L http://demo.typo3.org | grep -q "Powered by" || $(dirname $0)/reset-demo.sh
-	    break
+        $home/reset-demo.sh
+        touch $log/check-demo-incident-`date +"%m-%d-%y-%T"`
+        break
+    else
+        echo "Check OK $i"
     fi
 done
