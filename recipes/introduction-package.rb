@@ -163,7 +163,7 @@ template "/root/check-demo.sh" do
 end
 
 cron "check-demo" do
-  minute "*"
+  minute "1-59"
   command "/root/check-demo.sh > /dev/null"
 end
 
