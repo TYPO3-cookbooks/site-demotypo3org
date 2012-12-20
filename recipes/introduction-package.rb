@@ -147,7 +147,7 @@ rm -f /etc/apache2/sites-enabled/master.demo.typo3.org
 /usr/sbin/service apache2 restart
 
 # In case we must log the reset
-# touch /var/log/demo/reset-`date +"%m-%d-%y-%T"`
+# touch /var/log/app/reset-`date +"%m-%d-%y-%T"`
 EOF
 
 end
@@ -157,14 +157,14 @@ end
 # Poor man's monitoring
 ##########################################
 
-template "/root/check-demo.sh" do
-  source "check-demo.sh"
+template "/root/keep-alive.sh" do
+  source "keep-alive.sh"
   mode "0755"
 end
 
-cron "check-demo" do
+cron "keep-alive" do
   minute "1-59"
-  command "/root/check-demo.sh > /dev/null"
+  command "/root/keep-alive.sh > /dev/null"
 end
 
 
@@ -243,7 +243,7 @@ end
 ######################################
 # SCHEDULE RESET SCRIPT
 ######################################
-directory "/var/log/demo" do
+directory "/var/log/app" do
   owner "root"
   group "root"
   mode "0755"
@@ -253,6 +253,6 @@ end
 cron "reset-demo" do
   hour "0,3,6,9,12,15,18,21"
   minute "0"
-  command "/root/reset-demo.sh > /var/log/demo/reset-demo.log"
+  command "/root/reset-demo.sh > /var/log/app/reset-demo.log"
 end
 

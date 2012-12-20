@@ -1,7 +1,7 @@
 #!/bin/bash
 
 home=$(dirname $0)
-log="/var/log/demo"
+log="/var/log/app"
 
 if [ ! -d $log ];
 then
@@ -42,7 +42,12 @@ do
         $home/reset-demo.sh
 
         # Log incident
-        echo $i > $log/check-demo-incident-`date +"%m-%d-%y-%T"`
+        fileName=keep-alive-incident-`date +"%m-%d-%y-%T"`
+        logFile=$log/$fileName
+        echo "${i}" > $logFile
+        echo "" >> $logFile
+        echo "" >> $logFile
+        echo "${content}" >> $logFile
         break
     else
         echo "Check OK $i"

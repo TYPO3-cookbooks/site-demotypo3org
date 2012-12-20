@@ -11,8 +11,8 @@ http://master.demo.typo3.org
 
 # Update welcome page with content below
 
-# Check if script "check-demo.sh" returns something
-sh /root/check-demo.sh
+# Check if script "keep-alive.sh" returns something
+sh /root/keep-alive.sh
 
 Content on landing page
 ========================
