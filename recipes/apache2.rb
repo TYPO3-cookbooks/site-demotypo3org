@@ -16,11 +16,6 @@
 # limitations under the License.
 #
 
-##########################################
-# Website list
-##########################################
-websites = %w{master.demo.typo3.org demo.typo3.org}
-
 ######################################
 # Install Apache
 ######################################
@@ -30,29 +25,37 @@ include_recipe "apache2::mod_rewrite"
 include_recipe "apache2::mod_expires"
 include_recipe "apache2::mod_headers"
 
-######################################
-# Configure Virtual Host
-######################################
-websites.each do |host|
-  template "#{host}" do
-    path "#{node[:apache][:dir]}/sites-available/#{host}"
-    source "apache2-site-template.erb"
-    owner node[:apache][:user]
-    group node[:apache][:group]
-    mode 0644
-    variables(
-      :log_dir => "/var/www/vhosts/#{host}/log",
-      :document_root => "/var/www/vhosts/#{host}/www",
-      :server_name => "#{host}"
-    )
-  end
-
-  # Enable Virtual Host
-  apache_site "#{host}" do
-    enable true
-    notifies  :restart, 'service[apache2]'
-  end
+template "/etc/apache2/ports.conf" do
+  path "/etc/apache2/ports.conf"
+  source "ports.erb"
+  owner "root"
+  group "root"
+  mode 0644
 end
+#
+#######################################
+## Configure Virtual Host
+#######################################
+#websites.each do |host|
+#  template "#{host}" do
+#    path "#{node[:apache][:dir]}/sites-available/#{host}"
+#    source "apache2-site-template.erb"
+#    owner node[:apache][:user]
+#    group node[:apache][:group]
+#    mode 0644
+#    variables(
+#      :log_dir => "/var/www/vhosts/#{host}/log",
+#      :document_root => "/var/www/vhosts/#{host}/www",
+#      :server_name => "#{host}"
+#    )
+#  end
+#
+#  # Enable Virtual Host
+#  apache_site "#{host}" do
+#    enable true
+#    notifies  :restart, 'service[apache2]'
+#  end
+#end
 
 # Override default
 #template "#{node[:apache][:dir]}/sites-available/default" do
@@ -64,7 +67,7 @@ end
 #end
 
 # For now disable website "master.demo.typo3.org"
-apache_site "master.demo.typo3.org" do
-  enable false
-  notifies  :restart, 'service[apache2]'
-end
+#apache_site "master.demo.typo3.org" do
+#  enable false
+#  notifies  :restart, 'service[apache2]'
+#end

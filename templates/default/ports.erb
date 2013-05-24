@@ -1,0 +1,11 @@
+#This file generated via template by Chef.
+Listen 80
+NameVirtualHost *:80
+
+<IfModule mod_ssl.c>
+    Listen 443
+</IfModule>
+
+<IfModule mod_gnutls.c>
+    Listen 443
+</IfModule>

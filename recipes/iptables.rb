@@ -52,6 +52,10 @@ iptables -A OUTPUT -p tcp --sport 80 -j ACCEPT
 iptables -A OUTPUT -p tcp --dport 80 -j ACCEPT
 iptables -A INPUT -p tcp --sport 80 -j ACCEPT
 
+# Allow outgoing https
+iptables -A OUTPUT -p tcp --dport 443 -j ACCEPT
+iptables -A INPUT -p tcp --sport 443 -j ACCEPT
+
 # Allow outgoing DNS
 iptables -A OUTPUT -p udp --dport 53 -j ACCEPT
 iptables -A INPUT -p udp --sport 53 -j ACCEPT
