@@ -22,6 +22,7 @@
 user "demotypo3org" do
   comment "User for demo.typo3.org Virtual Host"
   shell "/bin/bash"
+  supports :manage_home=>true
 end
 
 %w{home log www core}.each do |dir|

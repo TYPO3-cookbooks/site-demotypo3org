@@ -38,7 +38,7 @@ echo "allow from $ip" >> <%= @documentRoot %>/.htaccess
 
 ##########
 echo "Installing package..."
-cd /var/www/vhosts/<%= @host %>/home/PackageInstaller; ./bin/behat
+cd /var/www/vhosts/<%= @host %>/home/PackageInstaller; ./bin/behat features/install-<%= @packageName %>.feature
 
 ##########
 echo "Enabling website to the world wide web..."

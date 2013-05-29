@@ -65,19 +65,19 @@ packages = [
         :host => 'introduction.typo3cms.demo.typo3.org',
         :packageName => 'introduction',
         :database => 'introduction',
-        :packageInstaller => 'https://github.com/fudriot/PackageInstaller.git',
+        :packageInstaller => 'https://github.com/TYPO3/PackageInstaller.git',
     }, {
         :user => 'demotypo3org',
         :host => 'bootstrap.typo3cms.demo.typo3.org',
         :packageName => 'bootstrap',
         :database => 'bootstrap',
-        :packageInstaller => 'https://github.com/fudriot/PackageInstaller.git',
+        :packageInstaller => 'https://github.com/TYPO3/PackageInstaller.git',
     }, {
         :user => 'demotypo3org',
         :host => 'government.typo3cms.demo.typo3.org',
         :packageName => 'government',
         :database => 'government',
-        :packageInstaller => 'https://github.com/fudriot/PackageInstaller.git',
+        :packageInstaller => 'https://github.com/TYPO3/PackageInstaller.git',
     }
 ]
 
@@ -187,13 +187,11 @@ packages.each { |package|
       group package[:user]
       cwd "/var/www/vhosts/#{package[:host]}/home"
       code <<-EOH
-      git clone https://github.com/fudriot/PackageInstaller.git
+      git clone #{package[:packageInstaller]}
       EOH
       not_if { ::File.exists? "/var/www/vhosts/#{package[:host]}/home/PackageInstaller" }
     end
-  end
 
-  if package[:packageInstaller]
     bash 'pull-package-installer-and-install-dependencies' do
       user package[:user]
       group package[:user]
@@ -210,9 +208,7 @@ packages.each { |package|
       EOH
       only_if { ::File.exists? "/var/www/vhosts/#{package[:host]}/home/PackageInstaller" }
     end
-  end
 
-  if package[:packageInstaller]
     bash 'generate-behat-configuration' do
       user package[:user]
       group package[:user]

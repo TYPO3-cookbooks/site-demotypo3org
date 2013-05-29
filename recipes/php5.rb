@@ -35,11 +35,16 @@ packages = [
   #'php5-iconv'
 ]
 
-
 packages.each do |package|
   package package do
     action :install
   end
+end
+
+template "/etc/php5/conf.d/suhosin.ini" do
+  source "suhosin.ini"
+  mode "0644"
+  notifies :restart, 'service[apache2]'
 end
 
 # install apc pecl with directives
