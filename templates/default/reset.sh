@@ -1,11 +1,27 @@
 #!/bin/bash
 
 ##########
-echo "Downloading package and extract it..."
+echo "Downloading package if necessary"
+
+# Delete package if older than a day for saving bandwidth
+find /tmp -type f -mtime +1 -name "<%= @packageName %>.tgz" -exec rm {} \;
+
+# Move to the temporary directory
 cd /tmp
-wget http://get.typo3.org/<%= @packageName %> -O <%= @packageName %>.tgz
+
+# If package file does not exist, download it.
+if [ ! -f <%= @packageName %>.tgz ];
+then
+    # Download package
+    wget http://get.typo3.org/<%= @packageName %> -O <%= @packageName %>.tgz
+
+    # Update time of the file
+    touch <%= @packageName %>.tgz
+fi
+
+##########
+echo "Extract package..."
 tar -xzf <%= @packageName %>.tgz
-rm <%= @packageName %>.tgz
 
 ##########
 echo "Resetting file structure..."
@@ -41,8 +57,12 @@ echo "Installing package..."
 cd /var/www/vhosts/<%= @host %>/home/PackageInstaller; ./bin/behat features/install-<%= @packageName %>.feature
 
 ##########
-echo "Enabling website to the world wide web..."
+echo "Allowing website to the world wide web..."
 head -n -3 <%= @documentRoot %>/.htaccess > <%= @documentRoot %>/.htaccess2 ; mv <%= @documentRoot %>/.htaccess2 <%= @documentRoot %>/.htaccess
+
+##########
+echo "Add hook for preventing defacement"
+cat /root/typo3-hook-tcemain.php >> /var/www/vhosts/<%= @host %>/www/typo3conf/AdditionalConfiguration.php
 
 ##########
 echo "Restricting permission..."
