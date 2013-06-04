@@ -5,6 +5,8 @@ if (!defined ('TYPO3_MODE')) {
 
 // Hook protecting the website against defacing
 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processDatamapClass'][] = 'tx_speciality_tcehook';
+$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processCmdmapClass'][] = 'tx_speciality_tcehook';
+
 
 /**
  * TCE hook
@@ -14,8 +16,8 @@ $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['proc
 class tx_speciality_tcehook {
 
 	/**
- 	 * @param       array           record
- 	 * @param       string          db table
+	 * @param       array           record
+	 * @param       string          db table
 	 * @param       integer         record uid
 	 * @param       object          parent object
 	 * @return      void
@@ -44,6 +46,20 @@ class tx_speciality_tcehook {
 		if ($table == 'sys_template') {
 			// Edit not possible for content from home page
 			$fieldArray = array();
+		}
+	}
+
+	/**
+	 * @param       string          $table
+	 * @param       int             $id
+	 * @return      void
+	 */
+	public function processCmdmap_deleteAction(&$table, &$id, &$recordToDelete, &$recordWasDeleted, &$reference) {
+
+		// Don't delete certain pages
+		$pages = array(1, 77, 74, 73);
+		if ($table == 'pages' && in_array($id, $pages)) {
+			die();
 		}
 	}
 }

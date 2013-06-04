@@ -20,17 +20,8 @@ then
 fi
 
 ##########
-echo "Extract package..."
-tar -xzf <%= @packageName %>.tgz
-
-##########
-echo "Resetting file structure..."
-rm -rf <%= @documentRoot %>
-mv <%= @packageName %>package* <%= @documentRoot %>
-
 TABLES=$(mysql -u <%= @database %> -p<%= @password %> <%= @database %> -e 'show tables' | awk '{ print $1}' | grep -v '^Tables' )
 
-##########
 echo "Deleting tables from \"<%= @database %>\" database..."
 for t in $TABLES
 do
@@ -38,10 +29,14 @@ do
 done
 
 ##########
-echo "Setting permission for installation..."
-touch <%= @documentRoot %>/typo3conf/ENABLE_INSTALL_TOOL
-chown -R <%= @user %>:www-data <%= @documentRoot %>
-chmod -R 770 <%= @documentRoot %>/{fileadmin,typo3conf,typo3temp,uploads}
+echo "Extract package..."
+cd /tmp
+tar -xzf <%= @packageName %>.tgz
+
+##########
+echo "Resetting file structure..."
+rm -rf <%= @documentRoot %>
+mv <%= @packageName %>package* <%= @documentRoot %>
 
 ##########
 echo "Blocking website except from localhost..."
@@ -51,6 +46,12 @@ ip=`tail -n 1 /etc/hosts | awk '{ print $1}'`
 echo "order deny,allow" >> <%= @documentRoot %>/.htaccess
 echo "deny from all" >> <%= @documentRoot %>/.htaccess
 echo "allow from $ip" >> <%= @documentRoot %>/.htaccess
+
+##########
+echo "Setting permission for installation..."
+touch <%= @documentRoot %>/typo3conf/ENABLE_INSTALL_TOOL
+chown -R <%= @user %>:www-data <%= @documentRoot %>
+chmod -R 770 <%= @documentRoot %>/{fileadmin,typo3conf,typo3temp,uploads}
 
 ##########
 echo "Installing package..."
@@ -67,3 +68,4 @@ cat /root/typo3-hook-tcemain.php >> /var/www/vhosts/<%= @host %>/www/typo3conf/A
 ##########
 echo "Restricting permission..."
 chmod -R 750 <%= @documentRoot %>/typo3conf
+chown -R root:www-data <%= @documentRoot %>/{fileadmin,typo3conf,uploads,typo3_src*}
