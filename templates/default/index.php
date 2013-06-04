@@ -5,18 +5,20 @@
  */
 $usageFile = 'usage.html';
 
-// Redirect packages
+// Rediect packages
 foreach (array('introduction', 'bootstrap', 'government') as $package) {
-    if ($_SERVER['REQUEST_URI'] == '/' . $package) {
-        header('Location: http://' . $package . '.typo3cms.demo.typo3.org/');
-        die();
-    }
+	if (strpos($_SERVER['REQUEST_URI'], '/' . $package) === 0) {
+		$segment = ltrim($_SERVER['REQUEST_URI'], '/');
+		$parts = explode('/', $segment);
+		$host = array_shift($parts);
+		$path = implode('/', $parts);
+		$path = ltrim($path, '/');
+		$location = sprintf('http://%s.typo3cms.demo.typo3.org/%s', $host, $path);
+		header('Location: ' . $location);
+		die();
+	}
 }
 
-if ($_SERVER['REQUEST_URI'] == '/') {
-	// well... quite rude ending!
-	$content = file_get_contents($usageFile);
-	print $content;
-	die();
-}
-
+// well... quite rude ending!
+$content = file_get_contents($usageFile);
+print $content;

@@ -93,16 +93,28 @@ end
 ##########################################
 # Main domain
 ##########################################
-#template "/var/www/vhosts/demo.typo3.org/www/index.php" do
-#  source "index.php"
-#  mode "0700"
-#  user "demotypo3org"
-#  group "www-data"
-#end
-#
-#template "/var/www/vhosts/demo.typo3.org/www/usage.html" do
-#  source "usage.html"
-#  mode "0700"
-#  user "demotypo3org"
-#  group "www-data"
-#end
+files = %w{index.php usage.html}
+
+files.each { |file|
+  template "/var/www/vhosts/demo.typo3.org/www/#{file}" do
+    source file
+    mode '0750'
+    user 'demotypo3org'
+    group 'www-data'
+  end
+}
+
+# Special case for .htaccess
+# Redirect all requests to index.php except time.php
+file "/var/www/vhosts/demo.typo3.org/www/.htaccess" do
+  mode '0750'
+  user 'demotypo3org'
+  group 'www-data'
+  action :create
+  content <<-EOF
+RewriteEngine on
+RewriteCond %{REQUEST_FILENAME} !time.php
+RewriteCond %{REQUEST_FILENAME} !index.php
+RewriteRule .* index.php?url=$0 [QSA,L]
+  EOF
+end
