@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="en-US" class="page-wide">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta http-equiv="refresh" content="60">
+
+<style type="text/css">
+html {
+	color: #000;
+	background: #FFF;
+}
+
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, button, textarea, p, blockquote, th, td, hr {
+	margin: 0;
+	padding: 0;
+}
+
+li {
+	list-style: none;
+}
+
+caption, th {
+	text-align: left;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-size: 100%;
+	font-weight: normal;
+}
+
+	/* webfonts */
+
+@font-face {
+	font-family: 'Share';
+	src: url('http://typo3.org/errorpages/res/fonts/share-bold-webfont.eot');
+	src: url('http://typo3.org/errorpages/res/fonts/share-bold-webfont.eot?#iefix') format('embedded-opentype'), url('http://typo3.org/errorpages/res/fonts/share-bold-webfont.woff') format('woff'), url('http://typo3.org/errorpages/res/fonts/share-bold-webfont.ttf') format('truetype'), url('http://typo3.org/errorpages/res/fonts/share-bold-webfont.svg#Share-BoldRegular') format('svg');
+	font-weight: bold;
+	font-style: italic;
+}
+
+@font-face {
+	font-family: 'Share';
+	src: url('http://typo3.org/errorpages/res/fonts/share-italic-webfont.eot');
+	src: url('http://typo3.org/errorpages/res/fonts/share-italic-webfont.eot?#iefix') format('embedded-opentype'), url('http://typo3.org/errorpages/res/fonts/share-italic-webfont.woff') format('woff'), url('http://typo3.org/errorpages/res/fonts/share-italic-webfont.ttf') format('truetype'), url('http://typo3.org/errorpages/res/fonts/share-italic-webfont.svg#Share-ItalicRegular') format('svg');
+	font-weight: normal;
+	font-style: italic;
+}
+
+@font-face {
+	font-family: 'Share';
+	src: url('http://typo3.org/errorpages/res/fonts/share-regular-webfont.eot');
+	src: url('http://typo3.org/errorpages/res/fonts/share-regular-webfont.eot?#iefix') format('embedded-opentype'), url('http://typo3.org/errorpages/res/fonts/share-regular-webfont.woff') format('woff'), url('http://typo3.org/errorpages/res/fonts/share-regular-webfont.ttf') format('truetype'), url('http://typo3.org/errorpages/res/fonts/share-regular-webfont.svg#Share-Regular') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+	/* Custom resets
+	------------------------------ */
+	/* a:focus 		{ outline: none; } */
+
+	/* General styles
+	------------------------------ */
+html {
+	background: #fbfbfb url(http://typo3.org/errorpages/res/shadow-site.png) repeat-x 0 0;
+	height: 100%;
+	font: 12px/18px Arial, 'Helvetica Neue', Helvetica, sans-serif;
+	overflow-y: scroll;
+}
+
+body {
+	background: transparent url(http://typo3.org/errorpages/res/shadow-page.jpg) no-repeat center 186px;
+	min-height: 100%;
+}
+
+	/* Page home
+	------------------------------ */
+.page-home {
+	background-color: #fff;
+	background-position: 0 -5px;
+}
+
+.page-home .p {
+	background: none;
+}
+
+.page-home body {
+	background: url(http://typo3.org/errorpages/res/shadow-top-slider.jpg) no-repeat center 199px;
+}
+
+.page-home .c {
+	border: none;
+}
+
+.page-home .s {
+	padding: 0;
+	overflow: visible;
+}
+
+	/* Page 404
+	--------------------------------------- */
+.page-wide .p {
+	background: #fff url(http://typo3.org/errorpages/res/page-404.png) repeat-x 0 134px;
+}
+
+.page-wide .s {
+	padding: 57px 70px 100px 70px;
+}
+
+.b-404 {
+}
+
+#page .b-404 h1 {
+	color: #000;
+	font-family: Share;
+	font-weight: bold;
+	font-size: 32px;
+	margin: 0;
+}
+
+#page .b-404 h2 {
+	margin-top: 6px;
+	font-family: Share;
+	font-style: italic;
+	font-size: 18px;
+}
+
+#page .b-404 h1 a,
+#page .b-404 h2 a {
+	text-decoration: none;
+	color: #000;
+}
+
+.b-404 .b-wi-pic {
+	margin: 0 50px -30px 0;
+}
+
+.b-404 .b-wi-text {
+	padding-top: 35px;
+}
+
+	/* General content elements
+	------------------------------ */
+
+.d h1, .h1,
+.d h2, .h2,
+.d h3, .h3,
+.d h4, .h4,
+legend {
+	font: normal 24px sans-serif;
+	margin: 22px 0 5px 0;
+}
+
+.d h1, .h1 {
+	font-family: Share;
+	color: #ff8700;
+	margin-top: 0;
+	margin-bottom: 20px;
+}
+
+.d h2, .h2 {
+	font-family: Share;
+	font-size: 20px;
+	margin-bottom: 6px;
+}
+
+.d h3, .h3 {
+	font-family: Share;
+	font-size: 18px;
+	color: #8c8c8c;
+	margin-bottom: 6px;
+}
+
+.d h4, .h4 {
+	font-family: Share;
+	font-size: 16px;
+	margin-bottom: 7px;
+}
+
+.d h5, .h5 {
+	font-size: 12px;
+	font-weight: bold;
+	margin-bottom: 5px;
+	overflow: hidden;
+}
+
+a.linkToTop {
+	float: right;
+	width: 0;
+	overflow: hidden;
+	padding-left: 24px;
+	margin-left: 10px;
+	background: url(http://typo3.org/errorpages/res/'i-arrows.png') left center;
+	white-space: nowrap;
+}
+
+.home-page-template .d h2,
+.home-page-template .d .h2 {
+	margin-bottom: 11px;
+}
+
+.home-page-template .spaced h2 {
+	margin-bottom: 20px;
+}
+
+h1:first-child,
+h2:first-child,
+h3:first-child,
+h4:first-child,
+h5:first-child,
+h6:first-child {
+	margin-top: 0;
+}
+
+blockquote {
+	color: #818181;
+	font-size: 14px;
+	line-height: 20px;
+	font-style: italic;
+	padding: 6px 0 0 36px;
+	position: relative;
+	background: url(http://typo3.org/errorpages/res/blockquote.png) no-repeat -23px 0;
+}
+
+.blockquote-indent {
+	margin-left: -36px;
+}
+
+.quote-right {
+	display: inline-block;
+	width: 22px;
+	height: 21px;
+	vertical-align: text-top;
+	margin: 5px 0 0 12px;
+	background: url(http://typo3.org/errorpages/res/blockquote.png) no-repeat 0 0;
+}
+
+blockquote .author {
+	text-align: right;
+	font-size: 11px;
+	line-height: 14px;
+}
+
+blockquote .author strong {
+	color: #000;
+	font-weight: bold;
+}
+
+pre, code, kbd, samp,
+.b-checksum {
+	padding: 0 1px;
+	background-color: #eee;
+	font-family: Arial, sans-serif;
+	font-size: 12px;
+}
+
+pre,
+.b-checksum {
+	border: 1px solid #c8c8c8;
+	padding: 10px 35px;
+	background: #f7f7f7 url(http://typo3.org/errorpages/res/pre.png) repeat-y;
+	margin: 0;
+	white-space: pre;
+	white-space: pre-wrap;
+	white-space: -o-pre-wrap;
+	white-space: -moz-pre-wrap;
+	word-wrap: break-word;
+}
+
+b, strong {
+	font-weight: bold;
+}
+
+i, em {
+	font-style: italic;
+}
+
+dfn {
+	font-style: italic;
+	font-weight: bold;
+}
+
+del {
+	text-decoration: line-through;
+}
+
+sup, sub {
+	position: relative;
+	font-size: 0.8em;
+}
+
+sup {
+	top: -0.4em;
+}
+
+sub {
+	bottom: -0.3em;
+}
+
+small {
+	font-size: 0.8em;
+}
+
+hr, .hr {
+	color: #dbdbdb;
+	background-color: #dbdbdb;
+	height: 1px;
+	border: 0;
+}
+
+.hr hr {
+	display: none;
+}
+
+.hr-art {
+	background: #fff url(http://typo3.org/errorpages/res/hr.png) no-repeat;
+	height: 7px;
+	border: 0;
+}
+
+.d p, .d ul, .d ol, .d dl, table, caption, blockquote, address, pre, hr, .hr {
+	margin-bottom: 17px;
+}
+
+.d ul ol, .d ol ul, .d ul ul, .d ol ol {
+	margin-bottom: 0px;
+}
+
+.d a {
+	color: #f58006;
+}
+
+.d a:visited {
+}
+
+.d a:hover,
+.d a:focus {
+	text-decoration: none;
+}
+
+.d a:active {
+}
+
+.pic {
+	border: 1px solid #d1d1d1;
+}
+
+.pic img {
+	display: block;
+}
+
+	/* Stucture
+	------------------------------ */
+.p {
+	width: 981px;
+	margin: 0 auto;
+	position: relative;
+	padding-top: 130px;
+	background: #fff;
+	overflow: hidden;
+}
+
+.s {
+	padding: 22px 30px 22px 30px;
+	overflow: hidden;
+}
+
+.s-sidebar {
+	float: right;
+	width: 166px;
+	padding: 0 0 0 27px;
+}
+
+.s-body {
+	overflow: hidden;
+}
+
+.a {
+}
+
+.h {
+	height: 130px;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 981px;
+	z-index: 10;
+}
+
+.f {
+	min-height: 100px;
+	background: #fbfbfb url(http://typo3.org/errorpages/res/shadow-footer.jpg) no-repeat center 0;
+	font-size: 11px;
+	color: #8c8c8c;
+}
+
+.f-body {
+	width: 961px;
+	margin: 0 auto;
+	position: relative;
+	padding: 29px 10px 40px 10px;
+	background: url(http://typo3.org/errorpages/res/f-g.png) no-repeat 53% center;
+}
+
+.f .g {
+}
+
+.gf > .g-5:first-child {
+	width: 53%;
+}
+
+.gf > .g-5 {
+	width: 47%;
+}
+
+.gf > .g-5:first-child > .gc {
+	padding-right: 35px;
+	padding-left: 0;
+}
+
+.gf > .g-5 > .gc {
+	padding-left: 35px;
+}
+
+.f p {
+	margin: 0 0 14px 0;
+}
+
+.c {
+	border: 1px solid #eaeaea;
+	border-width: 0 1px;
+	min-height: 500px;
+	position: relative;
+	z-index: 0;
+	overflow: hidden;
+}
+
+#content {
+	z-index: 1;
+}
+
+	/* Block with image
+	------------------------------ */
+
+.b-wi {
+}
+
+.b-wi-pic {
+	float: left;
+	margin-right: 10px;
+}
+
+.b-wi-pic img {
+	display: block;
+	margin-bottom: 10px
+}
+
+.b-wi-r .b-wi-pic {
+	float: right;
+	margin: 0 0 0 10px;
+}
+
+.b-wi-text {
+	overflow: auto;
+}
+
+.d .img-info {
+	color: #b3b3b3;
+	font-size: 11px;
+	line-height: 14px;
+}
+
+	/* Header elements
+	------------------------------ */
+#logo {
+	text-decoration: none;
+	display: block;
+	width: 118px;
+	position: absolute;
+	left: 13px;
+	top: 40px;
+}
+
+#logo img {
+}
+
+.h-bar {
+	position: absolute;
+	top: 52px;
+	right: 0;
+	z-index: 200;
+	font-size: 11px;
+}
+
+.h-bar-nav {
+	position: absolute;
+	right: 201px;
+	top: -2px;
+	width: 250px;
+	text-align: right;
+}
+
+.h-bar-nav > li {
+	float: left;
+	display: inline-block;
+	position: relative;
+	background: url(http://typo3.org/errorpages/res/h-bar-nav-li.png) no-repeat 0 9px;
+	text-align: left;
+	margin-left: -1px;
+}
+
+.h-bar-nav > li:first-child {
+	background: none;
+}
+
+.h-bar-nav > li > a {
+	text-decoration: none;
+	display: block;
+}
+
+.h-bar-nav a {
+	color: #e87c0c;
+	text-decoration: none;
+}
+
+.b-drop-h {
+	height: 27px;
+	border: 1px solid transparent;
+	border-bottom: 0;
+	display: block;
+	padding: 4px 11px 0 11px;
+	position: relative;
+	z-index: 11;
+}
+
+.b-drop-h-l,
+.b-drop-h-r {
+	height: 27px;
+	position: absolute;
+	z-index: 11;
+	width: 2px;
+	height: 31px;
+	background: url(http://typo3.org/errorpages/res/b-drop-h.png) no-repeat;
+	top: -1px;
+	display: none;
+}
+
+.b-drop-h-l {
+	left: -3px;
+}
+
+.b-drop-h-r {
+	right: -3px;
+	background-position: -2px 0;
+}
+
+.b-drop-h .ico {
+	margin: 0 0 0 6px;
+}
+
+.h-bar-nav li.hover .b-drop-h,
+.h-bar-nav > li:hover .b-drop-h,
+.h-bar-nav > li:hover .b-drop-h {
+	background: #fff;
+	border-color: #e3e3e3;
+}
+
+.h-bar-nav > li:hover .b-drop-body,
+.h-bar-nav > li:hover .b-drop-h-r,
+.h-bar-nav > li:hover .b-drop-h-l {
+	display: block;
+}
+
+.h-bar-nav li.hover .b-drop-body,
+.h-bar-nav li.hover .b-drop-h-r,
+.h-bar-nav li.hover .b-drop-h-l {
+	display: block;
+}
+
+.b-drop-body {
+	position: absolute;
+	z-index: 10;
+	border: 1px solid #e3e3e3;
+	background: #fff;
+	padding: 13px 10px;
+	top: 31px;
+	left: 0;
+	font-size: 11px;
+	color: #8c8c8c;
+	display: none;
+	min-width: 150px;
+}
+
+.b-drop-body-l,
+.b-drop-body-l div,
+.b-drop-body-b,
+.b-drop-body-b div,
+.b-drop-body-r,
+.b-drop-body-r div {
+	position: absolute;
+}
+
+.b-drop-body-l
+
+		.b-drop-r.b-drop-body {
+	left: auto;
+	right: 0;
+}
+
+.b-drop-r .b-drop-body-r {
+	top: -1px;
+}
+
+.b-drop-r .b-drop-body-l {
+	top: 3px;
+}
+
+.b-drop-body .f-row {
+	white-space: nowrap;
+	margin: 0 0 5px 0;
+	text-align: right;
+}
+
+.b-drop-body .f-row-spacer {
+	padding: 0 6px;
+	display: inline-block;
+}
+
+.b-drop-body .f-row .i-text-mini {
+	width: 147px;
+}
+
+.b-drop-body .f-row .i-select-mini {
+	width: 158px;
+}
+
+.b-drop-body .f-row .i-select-mini option {
+	padding: 1px;
+}
+
+.b-drop-body .f-links {
+	margin: 9px 0 0 0;
+	white-space: nowrap;
+}
+
+.b-drop-body .f-action {
+	margin: 4px 0 0 10px;
+	float: right;
+}
+
+.b-drop-body .f-row label {
+	padding: 0 10px 0 0;
+}
+
+.b-drop-body .f-row input {
+}
+
+	/* Header: Navigation
+	------------------------------ */
+.nav {
+	border: 1px solid #e97e0d;
+	height: 32px;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	display: block;
+	background: #f58006;
+	right: 0;
+	display: block;
+	z-index: 100;
+}
+
+
+.nav > .cur > a,
+.nav > li > a:hover {
+	background-position: 0 -32px;
+}
+
+.nav > li > a:focus {
+	background-position: 0 -32px;
+	text-decoration: underline;
+}
+
+.nav > li:first-child > a {
+	border-right: 1px solid #e97e0d;
+	border-left: 0;
+}
+
+.nav .f-r {
+	border-left: 1px solid #e97e0d;
+}
+
+.nav .f-r a {
+	border-right: 0;
+}
+
+.nav .ico {
+	position: relative;
+	top: 3px;
+	margin-left: -5px;
+}
+
+.nav .nav-sub {
+	width: 388px;
+	position: absolute;
+	left: -1px;
+	top: 33px; /*BEN:height:274px;*/
+	overflow: hidden;
+	color: #fff;
+	display: none;
+}
+
+.nav .nav-sub .col:first-child {
+	padding: 15px;
+	background-position: 0 0; /*border-width:1px 0 1px 1px;*/
+	margin: 0 -3px 0 0;
+	top: 0;
+}
+
+.nav .nav-sub .animate {
+	margin-top: -285px;
+}
+
+.nav .nav-sub li {
+	float: none;
+	font-size: 11px;
+}
+
+.nav .nav-sub a {
+	text-decoration: none;
+	color: #e5e5e5;
+	display: block;
+	padding: 1px 5px;
+}
+
+.nav .nav-sub a:hover,
+.nav .nav-sub a:focus {
+	background: #5f5f5f;
+	color: #fff;
+}
+
+.nav .nav-sub ul {
+	margin-bottom: 15px;
+}
+
+.nav .nav-sub h4 {
+	font-weight: bold;
+	font-size: 12px;
+}
+
+.nav li:hover .nav-sub {
+}
+
+.b-drop-nav {
+	min-width: 150px;
+}
+
+.b-drop-nav	li {
+	border-top: 1px solid #ebebeb;
+}
+
+.b-drop-nav li:first-child {
+	border-top: 0;
+}
+
+.b-drop-nav	a {
+	text-decoration: none;
+	display: block;
+	padding: 1px 6px 2px 6px;
+}
+
+.b-drop-nav	a:hover,
+.b-drop-nav	a:focus,
+.b-drop-nav	.cur a {
+	color: #8c8c8c;
+	background: #f5f5f5;
+}
+
+.nav .nav-sub h4 a,
+.nav .nav-sub h4 span {
+	color: #fff;
+	padding: 0;
+	padding: 3px 5px;
+}
+
+.nav .nav-sub h4 a:focus,
+.nav .nav-sub h4 a:hover {
+	background: none;
+}
+
+
+</style>
+
+<title>Server Error - typo3.org</title>
+
+</head>
+<body><a id="top"></a>
+
+<div class="p wide-page-template" id="page">
+	<div class="c" id="content">
+		<div class="s d" id="section">
+			<div class="b-404 b-wi">
+				<div class="b-wi-pic">
+					<img src="http://typo3.org/errorpages/res/wewillberightback.png" width="352" height="256" alt="">
+				</div>
+				<div class="b-wi-text">
+					<h1>The page is beeing reset</h1>
+
+					<h2>Reset shouldn't last more than 60 seconds...</h2>
+
+					<div class="b-404-description">
+						<p>
+							Lean back and keep this tab open, <strong>the page will automatically be reloaded shortly</strong>.</p>
+					</div>
+
+				</div>
+			</div>
+			<a id="c2005"></a>
+
+
+		</div>
+	</div>
+
+	<div class="h" id="header">
+		<a href="http://typo3.org/" target="_top" id="logo"><img src="http://typo3.org/errorpages/res/typo3-logo.png" width="118" height="34"
+		                                                              alt="TYPO3" title="TYPO3"></a>
+
+		<div class="h-bar">
+			<ul class="h-bar-nav">
+				<li><a href="http://typo3.org/" target="_top"><span class="b-drop-h">Go to: typo3.org<span
+						class="i-arr-down-or ico"></span><span class="b-drop-h-l"></span><span
+						class="b-drop-h-r"></span></span></a>
+
+					<div class="b-drop-body b-drop-r">
+						<ul class="b-drop-nav">
+							<li><a href="http://buzz.typo3.org/" target="_blank">Buzz (TYPO3 Blogs)</a></li>
+							<li><a href="http://certification.typo3.org/" target="_blank">Certification</a></li>
+							<li><a href="http://flow3.typo3.org/" target="_blank">FLOW3</a></li>
+							<li><a href="http://forge.typo3.org/" target="_blank">Forge (Dev Platform)</a></li>
+							<li><a href="http://lists.typo3.org/" target="_blank">Mailing lists</a></li>
+							<li><a href="http://association.typo3.org/" target="_blank">TYPO3 Association</a></li>
+							<li><a href="http://wiki.typo3.org/" target="_blank">TYPO3 Wiki</a></li>
+						</ul>
+
+						<div class="b-drop-body-l">
+							<div></div>
+							<div class="b-drop-r-tl"></div>
+						</div>
+						<div class="b-drop-body-b">
+							<div></div>
+						</div>
+						<div class="b-drop-body-r"></div>
+					</div>
+				</li>
+			</ul>
+
+		</div>
+		<ul class="nav">
+
+		</ul>
+	</div>
+
+
+</div>
+
+
+</body>
+</html>

@@ -39,6 +39,11 @@ rm -rf <%= @documentRoot %>
 mv <%= @packageName %>package* <%= @documentRoot %>
 
 ##########
+echo "Adding 403 page..."
+cp /root/403.html <%= @documentRoot %>
+chmod 755 <%= @documentRoot %>/403.html
+
+##########
 echo "Blocking website except from localhost..."
 
 # Get public ip of server

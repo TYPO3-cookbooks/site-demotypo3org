@@ -6,7 +6,7 @@
 	DirectoryIndex "index.html" "index.php"
 	CustomLog "<%= @log_dir %>/access_log" combined
 	ErrorLog "<%= @log_dir %>/error_log"
-	ErrorDocument 404 /error/HTTP_NOT_FOUND.html.var
+	ErrorDocument 403 /403.html
 	LogLevel warn
 	<Directory "<%= @document_root %>">
 		RedirectMatch permanent ^/login /typo3
