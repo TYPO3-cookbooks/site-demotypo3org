@@ -1,22 +1,22 @@
 #!/bin/bash
 
 ##########
-echo "Downloading package if necessary"
+echo "Downloading distribution if necessary"
 
-# Delete package if older than a day for saving bandwidth
-find /tmp -type f -mtime +1 -name "<%= @packageName %>.tgz" -exec rm {} \;
+# Delete distribution if older than a day for saving bandwidth
+find /tmp -type f -mtime +1 -name "<%= @distributionName %>.tgz" -exec rm {} \;
 
 # Move to the temporary directory
 cd /tmp
 
-# If package file does not exist, download it.
-if [ ! -f <%= @packageName %>.tgz ];
+# If distribution file does not exist, download it.
+if [ ! -f <%= @distributionName %>.tgz ];
 then
-    # Download package
-    wget http://get.typo3.org/<%= @packageName %> -O <%= @packageName %>.tgz
+    # Download distribution
+    wget http://get.typo3.org/<%= @distributionName %> -O <%= @distributionName %>.tgz
 
     # Update time of the file
-    touch <%= @packageName %>.tgz
+    touch <%= @distributionName %>.tgz
 fi
 
 ##########
@@ -29,14 +29,14 @@ do
 done
 
 ##########
-echo "Extract package..."
+echo "Extract distribution..."
 cd /tmp
-tar -xzf <%= @packageName %>.tgz
+tar -xzf <%= @distributionName %>.tgz
 
 ##########
 echo "Resetting file structure..."
 rm -rf <%= @documentRoot %>
-mv <%= @packageName %>package* <%= @documentRoot %>
+mv <%= @distributionName %>package* <%= @documentRoot %>
 
 ##########
 echo "Adding 403 page..."
@@ -59,8 +59,8 @@ chown -R <%= @user %>:www-data <%= @documentRoot %>
 chmod -R 770 <%= @documentRoot %>/{fileadmin,typo3conf,typo3temp,uploads}
 
 ##########
-echo "Installing package..."
-cd /var/www/vhosts/<%= @host %>/home/PackageInstaller; ./bin/behat features/install-<%= @packageName %>.feature
+echo "Installing distribution..."
+cd /var/www/vhosts/<%= @host %>/home/PackageInstaller; ./bin/behat features/install-<%= @distributionName %>.feature
 
 ##########
 echo "Allowing website to the world wide web..."

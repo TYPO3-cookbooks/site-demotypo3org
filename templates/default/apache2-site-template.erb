@@ -8,6 +8,7 @@
 	ErrorLog "<%= @log_dir %>/error_log"
 	ErrorDocument 403 /403.html
 	LogLevel warn
+	<%= @environment_variable %>
 	<Directory "<%= @document_root %>">
 		RedirectMatch permanent ^/login /typo3
 		AllowOverride All

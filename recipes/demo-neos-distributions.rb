@@ -21,25 +21,11 @@ mysql_connection_info = {:host => "localhost", :username => 'root', :password =>
 packages = [
   {
     :user => 'demotypo3org',
-    :host => 'introduction.typo3cms.demo.typo3.org',
-    :packageName => 'introduction',
-    :database => 'introduction',
+    :host => 'neos.demo.typo3.org',
+    :distributionName => 'neos',
+    :database => 'neos',
     :packageInstaller => 'https://github.com/TYPO3/PackageInstaller.git',
-    :cronMinute => 00,
-  }, {
-    :user => 'demotypo3org',
-    :host => 'bootstrap.typo3cms.demo.typo3.org',
-    :packageName => 'bootstrap',
-    :database => 'bootstrap',
-    :packageInstaller => 'https://github.com/TYPO3/PackageInstaller.git',
-    :cronMinute => 02,
-  }, {
-    :user => 'demotypo3org',
-    :host => 'government.typo3cms.demo.typo3.org',
-    :packageName => 'government',
-    :database => 'government',
-    :packageInstaller => 'https://github.com/TYPO3/PackageInstaller.git',
-    :cronMinute => 04,
+    :cronMinute => 06,
   }
 ]
 
@@ -54,7 +40,7 @@ packages.each { |package|
     shell '/bin/bash'
   end
 
-  %w{home log www}.each do |dir|
+  %w{home log releases shared current current/Web}.each do |dir|
     directory "/var/www/vhosts/#{package[:host]}/#{dir}" do
       owner package[:user]
       group 'root'
@@ -62,6 +48,10 @@ packages.each { |package|
       recursive true
       action :create
     end
+  end
+
+  link "/var/www/vhosts/#{package[:host]}/www" do
+    to "/var/www/vhosts/#{package[:host]}/releases/current/Web"
   end
 
   ######################################
@@ -77,7 +67,9 @@ packages.each { |package|
     variables(
       :log_dir => "/var/www/vhosts/#{package[:host]}/log",
       :document_root => "/var/www/vhosts/#{package[:host]}/www",
-      :server_name => "#{package[:host]}"
+      :server_name => "#{package[:host]}",
+      # @todo change me to Production once bug is resolved
+      :environment_variable => "SetEnv FLOW_CONTEXT Development"
     )
   end
 
@@ -172,7 +164,8 @@ packages.each { |package|
       php generate-behat-configuration.php --domain=http://#{package[:host]}/ \
           --database-password=#{node[:mysql][:users][package[:database]][:password]} \
           --database-user=#{package[:database]} \
-          --database-name=#{package[:database]}
+          --database-name=#{package[:database]} \
+          --neos
     EOH
     not_if { ::File.exists? "/var/www/vhosts/#{package[:host]}/home/PackageInstaller/behat.yml" }
   end
@@ -182,35 +175,36 @@ packages.each { |package|
   ##########################################
 
   template "/root/#{package[:host]}.reset.sh" do
-    source "reset.sh"
+    source "reset-neos.sh"
     mode "0700"
     variables(
-      :packageName => package[:packageName],
+      :distributionName => package[:distributionName],
       :documentRoot => "/var/www/vhosts/#{package[:host]}/www",
+      :currentRelease => "/var/www/vhosts/#{package[:host]}/releases/current",
       :host => package[:host],
       :database => package[:database],
-      :password => node[:mysql][:users][package[:database]][:password],
+      :password => node['mysql']['server_root_password'],
       :user => package[:user]
     )
   end
 
-  cron "reset-demo-#{package[:host]}" do
-    #hour '2,5,8,11,14,17,20,23'
-    minute package[:cronMinute]
-    command "/root/#{package[:host]}.reset.sh > /var/log/#{package[:host]}.log"
-  end
+  #cron "reset-demo-#{package[:host]}" do
+  #  #hour '2,5,8,11,14,17,20,23'
+  #  minute package[:cronMinute]
+  #  command "/root/#{package[:host]}.reset.sh > /var/log/#{package[:host]}.log"
+  #end
 }
 
 ##########################################
 # Add hook preventing website defacement
 ##########################################
 
-template "/root/typo3-hook-tcemain.php" do
-  source "typo3-hook-tcemain.php"
-  mode "0700"
-end
-
 template "/root/403.html" do
   source "403.html"
   mode "0700"
+end
+
+template "/etc/init.d/phantomjs" do
+  source "phantomjs.sh"
+  mode "0755"
 end
