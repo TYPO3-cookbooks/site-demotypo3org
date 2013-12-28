@@ -23,7 +23,6 @@ then
     touch <%= @distributionName %>
 fi
 
-
 ##########
 
 mysql -u root -p<%= @password %> -e "DROP DATABASE <%= @database %>;"
@@ -58,10 +57,7 @@ cd <%= @currentRelease %>; sudo -u root FLOW_CONTEXT=Production ./flow flow:core
 echo "Building some cache which will make the installer faster..."
 curl -s http://neos.demo.typo3.org/setup > /dev/null
 
-# Fix some permission problem (in early Neos, at least)
-cd <%= @currentRelease %>; chmod -R 777 Data
-
-# Building cache even deeper
+# Building cache even deeper...
 curl -s http://neos.demo.typo3.org/setup/login > /dev/null
 
 ##########
