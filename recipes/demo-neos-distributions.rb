@@ -68,8 +68,7 @@ packages.each { |package|
       :log_dir => "/var/www/vhosts/#{package[:host]}/log",
       :document_root => "/var/www/vhosts/#{package[:host]}/www",
       :server_name => "#{package[:host]}",
-      # @todo change me to Production once bug is resolved
-      :environment_variable => "SetEnv FLOW_CONTEXT Development"
+      :environment_variable => "SetEnv FLOW_CONTEXT Production"
     )
   end
 
@@ -188,11 +187,11 @@ packages.each { |package|
     )
   end
 
-  #cron "reset-demo-#{package[:host]}" do
-  #  #hour '2,5,8,11,14,17,20,23'
-  #  minute package[:cronMinute]
-  #  command "/root/#{package[:host]}.reset.sh > /var/log/#{package[:host]}.log"
-  #end
+  cron "reset-demo-#{package[:host]}" do
+    #hour '2,5,8,11,14,17,20,23'
+    minute package[:cronMinute]
+    command "/root/#{package[:host]}.reset.sh > /var/log/#{package[:host]}.log"
+  end
 }
 
 ##########################################

@@ -60,6 +60,10 @@ iptables -A INPUT -p tcp --sport 443 -j ACCEPT
 iptables -A OUTPUT -p udp --dport 53 -j ACCEPT
 iptables -A INPUT -p udp --sport 53 -j ACCEPT
 
+# Allow incoming Mosh traffic
+iptables -A INPUT -p udp --dport 60000:60010 -j ACCEPT
+iptables -A OUTPUT -p udp --sport 60000:60010 -j ACCEPT
+
 # Allow outoing 4000 (Chef)
 iptables -A OUTPUT -p tcp --dport 4000 -j ACCEPT
 iptables -A INPUT -p tcp --sport 4000 -j ACCEPT

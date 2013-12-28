@@ -74,3 +74,6 @@ cat /root/typo3-hook-tcemain.php >> /var/www/vhosts/<%= @host %>/www/typo3conf/A
 echo "Restricting permission..."
 chmod -R 750 <%= @documentRoot %>/typo3conf
 chown -R root:www-data <%= @documentRoot %>/{fileadmin,typo3conf,uploads,typo3_src*}
+
+echo "Script ended at `date +'%m/%d/%y @ %H:%M'`"
+exit $?
