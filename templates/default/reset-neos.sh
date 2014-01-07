@@ -1,6 +1,16 @@
 #!/bin/bash
 
 ##########
+echo "Launching PhantomJS" daemon if stopped
+
+pid=`ps -aefw | grep "phantomjs" | grep -v " grep " | awk '{print $2}'`
+if [ -z "$pid" ]
+then
+    /usr/sbin/service phantomjs start
+    echo '  -> service started';
+fi
+
+##########
 echo "Downloading distribution if necessary"
 
 # Delete distribution if older than a day for saving bandwidth
@@ -51,6 +61,9 @@ echo "allow from $ip" >> <%= @documentRoot %>/.htaccess
 
 ##########
 echo "Setting up permission..."
+# Prevent Flow "setfilepermissions" commmand error
+# If directory does not exist a warning is raised.
+mkdir <%= @currentRelease %>/Web/_Resources
 cd <%= @currentRelease %>; sudo -u root FLOW_CONTEXT=Production ./flow flow:core:setfilepermissions <%= @user %> www-data www-data
 
 ##########

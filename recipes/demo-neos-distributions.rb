@@ -40,7 +40,7 @@ packages.each { |package|
     shell '/bin/bash'
   end
 
-  %w{home log releases shared current current/Web}.each do |dir|
+  %w{home log shared releases/current/Web}.each do |dir|
     directory "/var/www/vhosts/#{package[:host]}/#{dir}" do
       owner package[:user]
       group 'root'
