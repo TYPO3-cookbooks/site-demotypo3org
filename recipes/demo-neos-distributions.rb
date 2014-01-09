@@ -26,6 +26,7 @@ packages = [
     :database => 'neos',
     :packageInstaller => 'https://github.com/TYPO3/PackageInstaller.git',
     :cronMinute => 06,
+    :fpmPort => 9003,
   }
 ]
 
@@ -57,25 +58,66 @@ packages.each { |package|
   ######################################
   # Configure Virtual Host
   ######################################
+  #
+  #template "#{package[:host]}" do
+  #  path "#{node[:apache][:dir]}/sites-available/#{package[:host]}"
+  #  source 'apache2-site-template.erb'
+  #  owner node[:apache][:user]
+  #  group node[:apache][:group]
+  #  mode 0644
+  #  variables(
+  #    :log_dir => "/var/www/vhosts/#{package[:host]}/log",
+  #    :document_root => "/var/www/vhosts/#{package[:host]}/www",
+  #    :server_name => "#{package[:host]}",
+  #    :environment_variable => "SetEnv FLOW_CONTEXT Production"
+  #  )
+  #end
+  #
+  ## Enable virtual host
+  #apache_site "#{package[:host]}" do
+  #  enable true
+  #  notifies :restart, 'service[apache2]'
+  #end
 
-  template "#{package[:host]}" do
-    path "#{node[:apache][:dir]}/sites-available/#{package[:host]}"
-    source 'apache2-site-template.erb'
-    owner node[:apache][:user]
-    group node[:apache][:group]
+  ######################################
+  # Nginx Configure Virtual Host
+  ######################################
+
+  template "nginx-#{package[:host]}" do
+    path "#{node[:nginx][:dir]}/sites-available/#{package[:host]}"
+    source "nginx-site-template.erb"
+    owner "root"
+    group "root"
     mode 0644
     variables(
-      :log_dir => "/var/www/vhosts/#{package[:host]}/log",
-      :document_root => "/var/www/vhosts/#{package[:host]}/www",
-      :server_name => "#{package[:host]}",
-      :environment_variable => "SetEnv FLOW_CONTEXT Production"
+      :domain => "#{package[:host]}",
+      :fpm_port => "#{package[:fpmPort]}"
     )
   end
 
-  # Enable virtual host
-  apache_site "#{package[:host]}" do
-    enable true
-    notifies :restart, 'service[apache2]'
+  link "#{node[:nginx][:dir]}/sites-enabled/#{host}" do
+    to "#{node[:nginx][:dir]}/sites-available/#{host}"
+    notifies :restart, 'service[nginx]'
+  end
+
+  ######################################
+  # PHP FPM configuration
+  ######################################
+
+  template "php-fpm-#{package[:host]}" do
+    path "/etc/php5/fpm/pool.d/#{package[:host]}.conf"
+    source "php-fpm-site-template.erb"
+    owner "root"
+    group "root"
+    mode 0644
+    pool_name = "#{package[:host]}".gsub(".", "")
+    variables(
+      :domain => "#{package[:host]}",
+      :user => "#{package[:user]}",
+      :fpm_port => "#{package[:fpmPort]}",
+      :pool_name => "#{pool_name}"
+    )
+    notifies :restart, 'service[php5-fpm]'
   end
 
   ######################################

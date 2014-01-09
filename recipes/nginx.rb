@@ -16,11 +16,6 @@
 # limitations under the License.
 #
 
-##########################################
-# Website list
-##########################################
-websites = %w{master.demo.typo3.org demo.typo3.org}
-
 ######################################
 # Install Nginx
 ######################################
@@ -66,29 +61,6 @@ end
     owner "root"
     group "root"
     mode 0644
-  end
-end
-
-# Write virtual host files and enable symlink
-websites.each_with_index do |host, index|
-
-  # Nginx virtual host configuration
-  template "nginx-#{host}" do
-    path "#{node[:nginx][:dir]}/sites-available/#{host}"
-    source "nginx-site-template.erb"
-    owner "root"
-    group "root"
-    mode 0644
-    fpm_port = index + 9000
-    variables(
-      :domain => "#{host}",
-      :fpm_port => "#{fpm_port}"
-    )
-  end
-
-  link "#{node[:nginx][:dir]}/sites-enabled/#{host}" do
-    to "#{node[:nginx][:dir]}/sites-available/#{host}"
-    notifies  :restart, 'service[nginx]'
   end
 end
 

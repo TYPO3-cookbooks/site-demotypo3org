@@ -17,11 +17,6 @@
 #
 
 ##########################################
-# Website list
-##########################################
-websites = %w{master.demo.typo3.org demo.typo3.org}
-
-##########################################
 # Install PHP and PHP-FPM (FastCGI Process Manager)
 ##########################################
 include_recipe "apt"
@@ -72,27 +67,28 @@ service "php5-fpm" do
 end
 
 # Handle template
-websites.each_with_index do |host, index|
-
-  # PHP FPM configuration
-  template "php-fpm-#{host}" do
-    path "/etc/php5/fpm/pool.d/#{host}.conf"
-    source "php-fpm-site-template.erb"
-    owner "root"
-    group "root"
-    mode 0644
-    fpm_port = index + 9000
-    pool_name = host.gsub(".", "")
-    variables(
-      :domain => "#{host}",
-      :fpm_port => "#{fpm_port}",
-      :pool_name => "#{pool_name}"
-    )
-    notifies  :restart, 'service[php5-fpm]'
-  end
-
-  link "#{node[:nginx][:dir]}/sites-enabled/#{host}" do
-    to "#{node[:nginx][:dir]}/sites-available/#{host}"
-    notifies  :restart, 'service[nginx]'
-  end
-end
+#websites = %w{master.demo.typo3.org demo.typo3.org}
+#websites.each_with_index do |host, index|
+#
+#  # PHP FPM configuration
+#  template "php-fpm-#{host}" do
+#    path "/etc/php5/fpm/pool.d/#{host}.conf"
+#    source "php-fpm-site-template.erb"
+#    owner "root"
+#    group "root"
+#    mode 0644
+#    fpm_port = index + 9000
+#    pool_name = host.gsub(".", "")
+#    variables(
+#      :domain => "#{host}",
+#      :fpm_port => "#{fpm_port}",
+#      :pool_name => "#{pool_name}"
+#    )
+#    notifies  :restart, 'service[php5-fpm]'
+#  end
+#
+#  link "#{node[:nginx][:dir]}/sites-enabled/#{host}" do
+#    to "#{node[:nginx][:dir]}/sites-available/#{host}"
+#    notifies  :restart, 'service[nginx]'
+#  end
+#end
