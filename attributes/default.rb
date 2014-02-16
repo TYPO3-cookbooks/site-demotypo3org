@@ -22,7 +22,7 @@
 
 # PHP.ini Settings
 node.override['php']['ini_settings'] = {
-  'memory_limit' => '256M',
+  'memory_limit' => '512M',
   'date.timezone' => 'Europe/Zurich',
   'display_errors' => 'Off'
 }
