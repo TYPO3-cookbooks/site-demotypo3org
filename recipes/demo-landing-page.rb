@@ -93,7 +93,7 @@ end
 ##########################################
 # Main domain
 ##########################################
-files = %w{index.php usage.html}
+files = %w{index.php}
 
 files.each { |file|
   template "/var/www/vhosts/demo.typo3.org/www/#{file}" do

@@ -31,6 +31,6 @@ include_recipe "site-demotypo3org::php5"
 ##include_recipe "site-demotypo3org::nginx"
 #include_recipe "site-demotypo3org::varnish"
 #
-#include_recipe "site-demotypo3org::demo-landing-page"
+include_recipe "site-demotypo3org::demo-landing-page"
 #include_recipe "site-demotypo3org::demo-typo3cms-distributions"
 #include_recipe "site-demotypo3org::demo-neos-distributions"
