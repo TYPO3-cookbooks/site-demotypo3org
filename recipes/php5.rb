@@ -16,7 +16,7 @@
 # limitations under the License.
 #
 include_recipe "php"
-include_recipe "php::apache2"
+#include_recipe "php::apache2"
 
 packages = [
   'php5-mysql',
@@ -43,28 +43,8 @@ packages.each do |package|
 end
 
 
-template "/etc/php5/conf.d/suhosin.ini" do
-  source "suhosin.ini"
-  mode "0644"
-  notifies :restart, 'service[apache2]'
-end
-
-
-# install apc pecl with directives
-#php_pear "apc" do
-#  action :install
-#  directives(:shm_size => 128, :enable_cli => 1)
+#template "/etc/php5/conf.d/suhosin.ini" do
+#  source "suhosin.ini"
+#  mode "0644"
+#  notifies :restart, 'service[apache2]'
 #end
-
-
-#echo"apc.enabled = 1
-#apc.shm_size = 128
-#apc.shm_segments=1
-#apc.write_lock = 1
-#apc.rfc1867 = On
-#apc.ttl=7200
-#apc.user_ttl=7200
-#apc.num_files_hint=1024
-#apc.mmap_file_mask=/tmp/apc.XXXXXX
-#apc.enable_cli=1
-#apc.slam_defense = Off

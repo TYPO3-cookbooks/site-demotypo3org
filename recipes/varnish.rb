@@ -20,3 +20,23 @@
 # Install Varnish
 ######################################
 include_recipe "varnish"
+
+
+template "/etc/varnish/default.vcl" do
+  path "/etc/varnish/default.vcl"
+  source "typo3-minimal.vcl.erb"
+  owner "root"
+  group "root"
+  mode 0644
+  notifies :restart, 'service[varnish]'
+end
+
+
+template "/etc/default/varnish" do
+  path "/etc/default/varnish"
+  source "varnish.erb"
+  owner "root"
+  group "root"
+  mode 0644
+  notifies :restart, 'service[varnish]'
+end
