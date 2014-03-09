@@ -64,9 +64,3 @@ end
   end
 end
 
-# For now disable website "master.demo.typo3.org"
-link "#{node[:nginx][:dir]}/sites-enabled/master.demo.typo3.org" do
-  action :delete
-  only_if "test -L #{node[:nginx][:dir]}/sites-enabled/master.demo.typo3.org"
-  notifies  :restart, 'service[nginx]'
-end
