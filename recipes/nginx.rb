@@ -19,7 +19,14 @@
 ######################################
 # Install Nginx
 ######################################
-include_recipe "nginx"
+#include_recipe "nginx"
+
+# Comment me if line above is commented out!!
+package "nginx"
+service 'nginx' do
+  supports :status => true, :restart => true, :reload => true
+  action :enable
+end
 
 # Overwrite website "default"
 template "nginx-default" do
