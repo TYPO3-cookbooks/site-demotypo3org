@@ -95,8 +95,8 @@ packages.each { |package|
     )
   end
 
-  link "#{node[:nginx][:dir]}/sites-enabled/#{host}" do
-    to "#{node[:nginx][:dir]}/sites-available/#{host}"
+  link "#{node[:nginx][:dir]}/sites-enabled/#{package[:host]}" do
+    to "#{node[:nginx][:dir]}/sites-available/#{package[:host]}"
     notifies :restart, 'service[nginx]'
   end
 
