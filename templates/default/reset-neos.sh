@@ -82,4 +82,8 @@ echo "Allowing website to the world wide web..."
 head -n -3 <%= @documentRoot %>/.htaccess > <%= @documentRoot %>/.htaccess2 ; mv <%= @documentRoot %>/.htaccess2 <%= @documentRoot %>/.htaccess
 
 echo "Script ended at `date +'%m/%d/%y @ %H:%M'`"
+
+##########
+echo "Stopping phantomjs"
+/usr/sbin/service phantomjs stop
 exit $?

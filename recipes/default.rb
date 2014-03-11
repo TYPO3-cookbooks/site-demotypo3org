@@ -17,20 +17,17 @@
 # limitations under the License.
 #
 
-# Configure Virtual Host
-## @todo remove VH masterdemotypo3org + database demotypo3org mastertypo3org
-#include_recipe "site-demotypo3org::iptables"
-#include_recipe "site-demotypo3org::imagemagick"
-#include_recipe "site-demotypo3org::mysql"
+# Library
+include_recipe "site-demotypo3org::iptables"
+include_recipe "site-demotypo3org::imagemagick"
+include_recipe "site-demotypo3org::mysql"
 include_recipe "site-demotypo3org::php5"
-##include_recipe "site-demotypo3org::apache2"
-#include_recipe "site-demotypo3org::phantomjs"
-#
-## Varnish introduces a cache effect that would imply a special TYPO3 extension to deal with.
 include_recipe "site-demotypo3org::php5-fpm"
 include_recipe "site-demotypo3org::nginx"
-#include_recipe "site-demotypo3org::varnish"
+include_recipe "site-demotypo3org::phantomjs"
+##include_recipe "site-demotypo3org::apache2"
+#include_recipe "site-demotypo3org::varnish" # varnish looks to be consuming to much memory
 
 include_recipe "site-demotypo3org::demo-landing-page"
 include_recipe "site-demotypo3org::demo-typo3cms-distributions"
-#include_recipe "site-demotypo3org::demo-neos-distributions"
+include_recipe "site-demotypo3org::demo-neos-distributions"
