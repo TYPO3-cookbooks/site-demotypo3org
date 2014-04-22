@@ -37,7 +37,7 @@ class tx_speciality_tcehook {
 		}
 
 		// Edit not possible for home page
-		if ($table == 'pages' && ($uid == 1 || $uid == 6)) {
+		if ($table == 'pages' && $uid == 1) {
 			// Edit not possible for content from home page
 			$fieldArray = array();
 		}
