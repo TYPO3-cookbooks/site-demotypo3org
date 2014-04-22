@@ -57,7 +57,7 @@ class tx_speciality_tcehook {
 	public function processCmdmap_deleteAction(&$table, &$id, &$recordToDelete, &$recordWasDeleted, &$reference) {
 
 		// Don't delete certain pages
-		$pages = array(1, 77, 74, 73);
+		$pages = array(1);
 		if ($table == 'pages' && in_array($id, $pages)) {
 			die();
 		}
