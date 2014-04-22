@@ -42,8 +42,8 @@ chmod -R 750 <%= @documentRoot %>/typo3conf
 chown -R root:www-data <%= @documentRoot %>/{fileadmin,typo3conf,uploads*}
 
 ##########
-#echo "Add hook for preventing defacement"
-#cat /root/typo3-hook-tcemain.php >> /var/www/vhosts/<%= @host %>/www/typo3conf/AdditionalConfiguration.php
+echo "Add additional configuration for preventing defacement"
+cp /root/AdditionalConfiguration.php /var/www/vhosts/<%= @host %>/www/typo3conf/AdditionalConfiguration.php
 
 ##########
 echo "Reset database..."

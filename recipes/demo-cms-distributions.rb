@@ -197,8 +197,8 @@ packages.each { |package|
 # Add hook preventing website defacement
 ##########################################
 
-template "/root/typo3-hook-tcemain.php" do
-  source "typo3-hook-tcemain.php"
+template "/root/AdditionalConfiguration.php" do
+  source "typo3-additional-configuration.php"
   mode "0700"
 end
 
