@@ -32,7 +32,7 @@ mv <%= @documentRoot %> $obsoletedDocumentRoot
 mv $copyDocumentRoot <%= @documentRoot %>
 
 ##########
-echo "Add additional configuration for preventing defacement"
+echo "Adding additional configuration for preventing defacement"
 cp /root/AdditionalConfiguration.php /var/www/vhosts/<%= @host %>/www/typo3conf/AdditionalConfiguration.php
 
 ##########
@@ -46,7 +46,7 @@ chmod -R 750 <%= @documentRoot %>/typo3conf
 chown -R root:www-data <%= @documentRoot %>/{fileadmin,typo3conf,uploads*}
 
 ##########
-echo "Reset database..."
+echo "Resetting database..."
 masterDatabase=ms<%= @database %>
 masterDumpFile=/var/www/vhosts/ms.<%= @host %>/home/ms<%= @database %>.sql
 if [ ! -f $masterDumpFile ];
@@ -61,7 +61,7 @@ mysql -u root -p<%= @password_root %> <%= @database %> < $masterDumpFile;
 #mysql -u root -p<%= @password_root %> -e "UPDATE be_users SET password='password' WHERE username='admin'";
 
 ##########
-echo "Clean up..."
+echo "Cleaning up..."
 rm -rf $obsoletedDocumentRoot
 
 echo "Script ended at `date +'%m/%d/%y @ %H:%M'`"
