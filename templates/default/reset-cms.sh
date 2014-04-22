@@ -32,6 +32,10 @@ mv <%= @documentRoot %> $obsoletedDocumentRoot
 mv $copyDocumentRoot <%= @documentRoot %>
 
 ##########
+echo "Add additional configuration for preventing defacement"
+cp /root/AdditionalConfiguration.php /var/www/vhosts/<%= @host %>/www/typo3conf/AdditionalConfiguration.php
+
+##########
 echo "Setting permission for installation..."
 chown -R <%= @user %>:www-data <%= @documentRoot %>
 #chmod -R 770 <%= @documentRoot %>/{fileadmin,typo3conf,typo3temp,uploads}
@@ -40,10 +44,6 @@ chown -R <%= @user %>:www-data <%= @documentRoot %>
 echo "Restricting permission..."
 chmod -R 750 <%= @documentRoot %>/typo3conf
 chown -R root:www-data <%= @documentRoot %>/{fileadmin,typo3conf,uploads*}
-
-##########
-echo "Add additional configuration for preventing defacement"
-cp /root/AdditionalConfiguration.php /var/www/vhosts/<%= @host %>/www/typo3conf/AdditionalConfiguration.php
 
 ##########
 echo "Reset database..."
