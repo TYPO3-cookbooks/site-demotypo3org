@@ -20,7 +20,7 @@ websites = [
   {
     :user => 'demotypo3org',
     :host => 'demo.typo3.org',
-    :fpmPort => 9004,
+    :fpmPort => 9000,
   }
 ]
 
