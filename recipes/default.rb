@@ -17,9 +17,13 @@
 # limitations under the License.
 #
 
+# Some basic packages
+package "imagemagick"
+package "acl"
+
 # Library
 include_recipe "site-demotypo3org::iptables"
-include_recipe "site-demotypo3org::imagemagick"
+#include_recipe "site-demotypo3org::imagemagick"
 include_recipe "site-demotypo3org::mysql"
 include_recipe "site-demotypo3org::php5"
 include_recipe "site-demotypo3org::php5-fpm"
