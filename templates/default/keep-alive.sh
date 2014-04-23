@@ -1,7 +1,7 @@
 #!/bin/bash
 
 home=$(dirname $0)
-log="/var/log/app"
+log="/var/log/demo"
 
 if [ ! -d $log ];
 then
@@ -26,6 +26,7 @@ do
         echo "" >> $logFile
         echo "" >> $logFile
         echo "${content}" >> $logFile
+        #<%= node[:zabbix][:install_dir] %>/bin/zabbix_sender --config <%= node[:zabbix][:etc_dir] %>/zabbix_agentd.conf --input-file $logFile
         break
     else
         echo "Check OK $i"

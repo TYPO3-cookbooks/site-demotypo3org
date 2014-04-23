@@ -30,4 +30,5 @@ include_recipe "site-demotypo3org::phantomjs"
 
 include_recipe "site-demotypo3org::demo-landing-page"
 include_recipe "site-demotypo3org::demo-cms-distributions"
+include_recipe "site-demotypo3org::monitoring"
 #include_recipe "site-demotypo3org::demo-neos-distributions"
