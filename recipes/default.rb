@@ -24,11 +24,7 @@ include_recipe "site-demotypo3org::mysql"
 include_recipe "site-demotypo3org::php5"
 include_recipe "site-demotypo3org::php5-fpm"
 include_recipe "site-demotypo3org::nginx"
-include_recipe "site-demotypo3org::phantomjs"
-##include_recipe "site-demotypo3org::apache2"
-#include_recipe "site-demotypo3org::varnish" # varnish looks to be consuming to much memory
 
 include_recipe "site-demotypo3org::demo-landing-page"
 include_recipe "site-demotypo3org::demo-cms-distributions"
 include_recipe "site-demotypo3org::monitoring"
-#include_recipe "site-demotypo3org::demo-neos-distributions"
