@@ -19,9 +19,6 @@
 
 include_recipe "iptables"
 
-#iptables_rule "iptables-rules"
-
-
 ######################################
 # Reset firewall
 ######################################
