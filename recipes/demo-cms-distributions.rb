@@ -20,26 +20,27 @@ mysql_connection_info = {:host => "localhost", :username => 'root', :password =>
 
 base_host = 'cms.demo.typo3.org'
 
-packages = [
+distributions = [
   {
-    :distributionName => 'introduction',
-    :cronMinute => 00,
-    :fpmPort => 9000,
+    :distribution_name => 'introduction',
+    :cron_minute => 00,
+    :fpm_port => 9001,
+    :type => 'cms',
   }
-# Next fpmPort 9001, 9002, 9005
+# Next fpm_port 9001, 9002, 9005
 ]
 
-packages.each { |package|
+distributions.each { |distribution|
 
   # Double loop, first for public host, second for mater.
   stages = ["", "ms"]
   stages.each_with_index do |stage, index|
 
     # Local variable
-    user = "#{stage}#{package[:distributionName]}"
+    user = "#{stage}#{distribution[:distribution_name]}"
     database = user
-    fpmPort = "#{package[:fpmPort]}".to_i + index
-    host = "#{package[:distributionName]}.#{base_host}"
+    fpm_port = "#{distribution[:fpm_port]}".to_i + index
+    host = "#{distribution[:distribution_name]}.#{base_host}"
     if stage.length > 0
       host = "#{stage}." + host
     end
@@ -76,7 +77,7 @@ packages.each { |package|
       mode 0644
       variables(
         :domain => "#{host}",
-        :fpm_port => "#{fpmPort}"
+        :fpm_port => "#{fpm_port}"
       )
     end
 
@@ -99,7 +100,7 @@ packages.each { |package|
       variables(
         :domain => "#{host}",
         :user => "#{user}",
-        :fpm_port => "#{fpmPort}",
+        :fpm_port => "#{fpm_port}",
         :pool_name => "#{host}".gsub(".", "")
       )
       notifies :restart, 'service[php5-fpm]'
@@ -160,11 +161,11 @@ packages.each { |package|
 
     # true means mater
     if stage.length == 0
-      template_source = "reset-cms.sh"
+      template_source = "reset-#{distribution[:type]}.sh"
       database_master = "ms#{database}"
       password_master = node[:mysql][:users][database_master][:password]
     else
-      template_source = "reset-cms-ms.sh"
+      template_source = "reset-#{distribution[:type]}-ms.sh"
       password_master = ""
     end
 
@@ -185,7 +186,7 @@ packages.each { |package|
     # Only for non master
     if stage.length == 0
       cron "reset-demo-#{host}" do
-        minute package[:cronMinute]
+        minute distribution[:cron_minute]
         command "/root/#{host}.reset.sh > /var/log/#{host}.log"
       end
     end
