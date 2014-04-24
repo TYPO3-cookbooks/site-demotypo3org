@@ -46,6 +46,8 @@ bash 'install-phantomjs-binary' do
 end
 
 
-# @todo
-# Check if service is running, if not -> "service phantomjs start"
+template "/etc/init.d/phantomjs" do
+  source "phantomjs.sh"
+  mode "0755"
+end
 
