@@ -2,6 +2,7 @@ server {
         listen  80;
 
         set $domain "<%= @domain %>";
+        set $application_path "/var/www/vhosts/<%= @domain %>/releases/current";
         set $phpFpmPort <%= @fpm_port %>;
 
         index index.html index.php;
@@ -11,10 +12,6 @@ server {
         error_log /var/www/vhosts/<%= @domain %>/log/error.log;
 
         root /var/www/vhosts/$domain/www;
-
-        # Access protection
-        #auth_basic            "Preview";
-        #auth_basic_user_file  /etc/nginx/htpasswd-t3con12-asia;
 
         include /etc/nginx/conf.location.d/*.conf;
 }

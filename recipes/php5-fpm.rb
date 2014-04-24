@@ -38,6 +38,7 @@ apt_repository "php53" do
 end
 
 include_recipe "php"
+include_recipe "php::fpm"
 
 packages = [
   'php5-fpm'

@@ -16,7 +16,6 @@
 # limitations under the License.
 #
 include_recipe "php"
-#include_recipe "php::apache2"
 
 packages = [
   'php5-mysql',
@@ -27,13 +26,8 @@ packages = [
   'php5-mcrypt',
   'php5-sqlite',
   'php5-xsl',
-  #'php5-mbstring',
-  #'php5-openssl',
-  #'php5-soap',
   'php5-ldap',
   'php5-suhosin',
-  #'php5-posix',
-  #'php5-iconv'
 ]
 
 packages.each do |package|
@@ -41,10 +35,3 @@ packages.each do |package|
     action :install
   end
 end
-
-
-#template "/etc/php5/conf.d/suhosin.ini" do
-#  source "suhosin.ini"
-#  mode "0644"
-#  notifies :restart, 'service[apache2]'
-#end
