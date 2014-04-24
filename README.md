@@ -22,7 +22,6 @@ Installs/Configures site-typo3org-mysql
 
 # Recipes
 
-* ::apache2
 * ::default
 * ::demo-cms-distributions
 * ::demo-landing-page
