@@ -18,33 +18,39 @@
 
 mysql_connection_info = {:host => "localhost", :username => 'root', :password => node['mysql']['server_root_password']}
 
-base_host = 'cms.demo.typo3.org'
-
 distributions = [
   {
-    :distribution_name => 'introduction',
-    :cron_minute => 00,
-    :fpm_port => 9001,
+    :name => 'introduction',
+    :domain => 'introduction.cms.demo.typo3.org',
     :type => 'cms',
+    :directories => %w(log www)
+  }, {
+    :name => 'neos',
+    :domain => 'neos.demo.typo3.org',
+    :type => 'neos',
+    :directories => %w(log shared releases/current/Web)
   }
-# Next fpm_port 9001, 9002, 9005
 ]
 
-distributions.each { |distribution|
+distributions.each_with_index do |distribution, index|
+
+  increment = index * 2
 
   # Double loop, first for public host, second for mater.
   stages = ["", "ms"]
-  stages.each_with_index do |stage, index|
+  stages.each do |stage|
 
     # Local variable
-    user = "#{stage}#{distribution[:distribution_name]}"
+    user = "#{stage}#{distribution[:name]}"
     database = user
-    fpm_port = "#{distribution[:fpm_port]}".to_i + index
-    host = "#{distribution[:distribution_name]}.#{base_host}"
+    fpm_port = 9000 + increment
+    host = "#{distribution[:domain]}"
+
+    # True means, the stage is master
     if stage.length > 0
       host = "#{stage}." + host
+      fpm_port = fpm_port + 1
     end
-
 
     ######################################
     # Create user and default directories
@@ -55,13 +61,20 @@ distributions.each { |distribution|
       shell '/bin/bash'
     end
 
-    %w{home log www}.each do |dir|
+    distribution[:directories].each do |dir|
       directory "/var/www/vhosts/#{host}/#{dir}" do
         owner "#{user}"
-        group 'root'
+        group "#{user}"
         mode '0755'
         recursive true
         action :create
+      end
+    end
+
+    # Special case for Neos
+    if distribution[:type] == 'neos'
+      link "/var/www/vhosts/#{host}/www" do
+        to "/var/www/vhosts/#{host}/releases/current/Web"
       end
     end
 
@@ -77,12 +90,19 @@ distributions.each { |distribution|
       mode 0644
       variables(
         :domain => "#{host}",
-        :fpm_port => "#{fpm_port}"
+        :fpm_port => "#{fpm_port}",
       )
+    end
+
+    # True means, the stage is master
+    nginx_action = :create
+    if stage.length > 0
+      #nginx_action = :delete
     end
 
     link "#{node[:nginx][:dir]}/sites-enabled/#{host}" do
       to "#{node[:nginx][:dir]}/sites-available/#{host}"
+      action nginx_action
       notifies :restart, 'service[nginx]'
     end
 
@@ -96,7 +116,6 @@ distributions.each { |distribution|
       owner "root"
       group "root"
       mode 0644
-      pool_name = "#{host}".gsub(".", "")
       variables(
         :domain => "#{host}",
         :user => "#{user}",
@@ -173,7 +192,8 @@ distributions.each { |distribution|
       source template_source
       mode "0700"
       variables(
-        :documentRoot => "/var/www/vhosts/#{host}/www",
+        :distribution_name => distribution[:name],
+        :document_root => "/var/www/vhosts/#{host}/www",
         :host => host,
         :database => database,
         :password => node[:mysql][:users][database][:password],
@@ -186,13 +206,14 @@ distributions.each { |distribution|
     # Only for non master
     if stage.length == 0
       cron "reset-demo-#{host}" do
-        minute distribution[:cron_minute]
+        minute increment
         command "/root/#{host}.reset.sh > /var/log/#{host}.log"
       end
     end
-  end
 
-}
+  end # foreach stages
+
+end # foreach distribution
 
 ##########################################
 # Add hook preventing website defacement

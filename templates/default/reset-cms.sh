@@ -28,8 +28,8 @@ done
 # Clear Cache
 rm -rf $copyDocumentRoot/typo3temp/*
 
-mv <%= @documentRoot %> $obsoletedDocumentRoot
-mv $copyDocumentRoot <%= @documentRoot %>
+mv <%= @document_root %> $obsoletedDocumentRoot
+mv $copyDocumentRoot <%= @document_root %>
 
 ##########
 echo "Adding additional configuration for preventing defacement"
@@ -37,13 +37,13 @@ cp /root/AdditionalConfiguration.php /var/www/vhosts/<%= @host %>/www/typo3conf/
 
 ##########
 echo "Setting permission for installation..."
-chown -R <%= @user %>:www-data <%= @documentRoot %>
-#chmod -R 770 <%= @documentRoot %>/{fileadmin,typo3conf,typo3temp,uploads}
+chown -R <%= @user %>:www-data <%= @document_root %>
+#chmod -R 770 <%= @document_root %>/{fileadmin,typo3conf,typo3temp,uploads}
 
 ##########
 echo "Restricting permission..."
-chmod -R 750 <%= @documentRoot %>/typo3conf
-chown -R root:www-data <%= @documentRoot %>/{fileadmin,typo3conf,uploads*}
+chmod -R 750 <%= @document_root %>/typo3conf
+chown -R root:www-data <%= @document_root %>/{fileadmin,typo3conf,uploads*}
 
 ##########
 echo "Resetting database..."
@@ -78,20 +78,20 @@ exit $?
 
 
 
-##########
+########## OBSOLETE CODE ##########
 #echo "Adding 403 page..."
-#cp /root/403.html <%= @documentRoot %>
-#chmod 755 <%= @documentRoot %>/403.html
+#cp /root/403.html <%= @document_root %>
+#chmod 755 <%= @document_root %>/403.html
 
 ##########
 #echo "Blocking website except from localhost..."
 
 # Get public ip of server
 #ip=`tail -n 1 /etc/hosts | awk '{print $1}'`
-#echo "order deny,allow" >> <%= @documentRoot %>/.htaccess
-#echo "deny from all" >> <%= @documentRoot %>/.htaccess
-#echo "allow from $ip" >> <%= @documentRoot %>/.htaccess
+#echo "order deny,allow" >> <%= @document_root %>/.htaccess
+#echo "deny from all" >> <%= @document_root %>/.htaccess
+#echo "allow from $ip" >> <%= @document_root %>/.htaccess
 
 ##########
 #echo "Allowing website to the world wide web..."
-#head -n -3 <%= @documentRoot %>/.htaccess > <%= @documentRoot %>/.htaccess2 ; mv <%= @documentRoot %>/.htaccess2 <%= @documentRoot %>/.htaccess
+#head -n -3 <%= @document_root %>/.htaccess > <%= @document_root %>/.htaccess2 ; mv <%= @document_root %>/.htaccess2 <%= @document_root %>/.htaccess

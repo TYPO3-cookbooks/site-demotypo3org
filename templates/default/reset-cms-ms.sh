@@ -30,9 +30,9 @@ tar -xzf current.tgz
 
 ##########
 echo "Resetting file structure..."
-rm -rf <%= @documentRoot %>
-mv /tmp/typo3_src* <%= @documentRoot %>
-touch <%= @documentRoot %>/FIRST_INSTALL
+rm -rf <%= @document_root %>
+mv /tmp/typo3_src* <%= @document_root %>
+touch <%= @document_root %>/FIRST_INSTALL
 
 ##########
 mysql -u root -p<%= @password_root %> -e "DROP DATABASE <%= @database %>; CREATE DATABASE <%= @database %>";
