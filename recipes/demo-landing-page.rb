@@ -20,7 +20,7 @@ websites = [
   {
     :user => 'demotypo3org',
     :host => 'demo.typo3.org',
-    :fpmPort => 9000,
+    :fpm_port => 8999,
   }
 ]
 
@@ -59,35 +59,11 @@ websites.each { |package|
     variables(
       :domain => "#{package[:host]}",
       :user => "#{package[:user]}",
-      :fpm_port => "#{package[:fpmPort]}",
+      :fpm_port => "#{package[:fpm_port]}",
       :pool_name => "#{pool_name}"
     )
     notifies :restart, 'service[php5-fpm]'
   end
-
-  ######################################
-  # Configure Virtual Host
-  ######################################
-
-  #template "#{package[:host]}" do
-  #  path "#{node[:apache][:dir]}/sites-available/#{package[:host]}"
-  #  source 'apache2-site-template.erb'
-  #  owner node[:apache][:user]
-  #  group node[:apache][:group]
-  #  mode 0644
-  #  variables(
-  #    :log_dir => "/var/www/vhosts/#{package[:host]}/log",
-  #    :document_root => "/var/www/vhosts/#{package[:host]}/www",
-  #    :server_name => "#{package[:host]}"
-  #  )
-  #end
-  #
-  ## Enable virtual host
-  #apache_site "#{package[:host]}" do
-  #  enable true
-  #  notifies :restart, 'service[apache2]'
-  #end
-
 
   ######################################
   # Nginx Configure Virtual Host
@@ -101,7 +77,7 @@ websites.each { |package|
     mode 0644
     variables(
       :domain => "#{package[:host]}",
-      :fpm_port => "#{package[:fpmPort]}"
+      :fpm_port => "#{package[:fpm_port]}"
     )
   end
 
