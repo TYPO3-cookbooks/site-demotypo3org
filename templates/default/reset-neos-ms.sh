@@ -1,9 +1,8 @@
 #!/bin/bash
 
 # Security stop
-#echo "Remove me if you can!"
-#exit -1
-
+echo "Remove me if you can!"
+exit -1
 
 ##########
 echo "Downloading distribution if necessary"
