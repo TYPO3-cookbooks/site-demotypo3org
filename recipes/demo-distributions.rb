@@ -90,7 +90,7 @@ distributions.each_with_index do |distribution, index|
       mode 0644
       variables(
         :domain => "#{host}",
-        :fpm_port => "#{fpm_port}",
+        :fpm_port => "#{fpm_port}"
       )
     end
 
