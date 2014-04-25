@@ -60,6 +60,10 @@ mysql -u root -p<%= @password_root %> <%= @database %> < $masterDumpFile;
 #@todo update master password
 #mysql -u root -p<%= @password_root %> -e "UPDATE be_users SET password='password' WHERE username='admin'";
 
+# @todo flush cache
+#mysql -u root -p<%= @password %> <%= @database %> -e "TRUNCATE table ";
+#rm -rf <%= @document_root %>/typo3temp/Cache
+
 ##########
 echo "Cleaning up..."
 rm -rf $obsoletedDocumentRoot
