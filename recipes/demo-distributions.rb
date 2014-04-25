@@ -97,7 +97,7 @@ distributions.each_with_index do |distribution, index|
     # True means, the stage is master
     nginx_action = :create
     if stage.length > 0
-      #nginx_action = :delete
+      nginx_action = :delete
     end
 
     link "#{node[:nginx][:dir]}/sites-enabled/#{host}" do
