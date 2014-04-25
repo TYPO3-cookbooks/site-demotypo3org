@@ -48,7 +48,7 @@ chown -R root:www-data <%= @document_root %>/{fileadmin,typo3conf,uploads*}
 ##########
 echo "Resetting database..."
 masterDatabase=ms<%= @database %>
-masterDumpFile=/var/www/vhosts/ms.<%= @host %>/home/ms<%= @database %>.sql
+masterDumpFile=/var/www/vhosts/ms.<%= @host %>/ms<%= @database %>.sql
 if [ ! -f $masterDumpFile ];
 then
     /usr/bin/mysqldump -u root -p<%= @password_root %> -e -Q  $masterDatabase > $masterDumpFile
