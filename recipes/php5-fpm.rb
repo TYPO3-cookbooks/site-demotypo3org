@@ -19,23 +19,7 @@
 ##########################################
 # Install PHP and PHP-FPM (FastCGI Process Manager)
 ##########################################
-include_recipe "apt"
 
-# add the php53 repository
-apt_repository "php53" do
-  uri "http://php53.dotdeb.org"
-  components ["all"]
-  distribution node['lsb']['codename']
-  action :add
-
-  # Add package key
-  keyserver "keys.gnupg.net"
-  key "89DF5277"
-
-  # In case that does not work
-  # gpg --keyserver keys.gnupg.net --recv-key 89DF5277
-  # gpg -a --export 89DF5277 | sudo apt-key add -
-end
 
 include_recipe "php"
 include_recipe "php::fpm"
