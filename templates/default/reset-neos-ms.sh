@@ -45,12 +45,10 @@ echo "Setting up permission..."
 mkdir $applicationPath/Web/_Resources
 cd $applicationPath; sudo -u root FLOW_CONTEXT=Production ./flow flow:core:setfilepermissions <%= @user %> www-data www-data
 
-##########
-#echo "Building some cache which will make the installer faster..."
-#curl -s http://neos.demo.typo3.org/setup > /dev/null
+# Check if that is really required
+chmod -R 777 $applicationPath/Data
 
-# Building cache even deeper...
-#curl -s http://neos.demo.typo3.org/setup/login > /dev/null
-
+echo "Done!"
+echo "Next step is to open http://ms.<%= @distribution_name %>.typo3.org/setup"
 
 exit $?
