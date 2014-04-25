@@ -22,12 +22,10 @@ packages = [
   'php5-curl',
   'php5-gd',
   'php5-adodb',
-  'php5-apc',
   'php5-mcrypt',
   'php5-sqlite',
   'php5-xsl',
   'php5-ldap',
-  'php5-suhosin',
 ]
 
 packages.each do |package|
