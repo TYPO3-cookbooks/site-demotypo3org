@@ -10,7 +10,7 @@ location ~ \.php$ {
         }
         fastcgi_pass 127.0.0.1:$phpFpmPort;
 
-        set $php_value "open_basedir='$document_root:$application_path:/tmp'";
+        set $php_value "open_basedir='$document_root:$application_path:/usr/bin:/tmp'";
         fastcgi_param PHP_VALUE $php_value;
         fastcgi_param FLOW_CONTEXT Production;
         fastcgi_param FLOW_ROOTPATH $application_path;
