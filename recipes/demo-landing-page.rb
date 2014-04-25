@@ -88,53 +88,15 @@ websites.each { |package|
 
 }
 
-
-######################################
-# GENERATE SCRIPT THAT RETURNS TIME
-######################################
-
-
-file "/var/www/vhosts/demo.typo3.org/www/time.php" do
-
-  owner "root"
-  group "root"
-  mode "0755"
-  action :create
-  content <<-EOF
-<?php
-header('Access-Control-Allow-Origin: *');
-date_default_timezone_set("UTC");
-echo date("c");
-?>
-  EOF
-end
-
-
 ##########################################
-# Main domain
+# Clone landing page
 ##########################################
-files = %w{index.php}
 
-files.each { |file|
-  template "/var/www/vhosts/demo.typo3.org/www/#{file}" do
-    source file
-    mode '0750'
-    user 'demotypo3org'
-    group 'www-data'
-  end
-}
-
-# Special case for .htaccess
-# Redirect all requests to index.php except time.php
-file "/var/www/vhosts/demo.typo3.org/www/.htaccess" do
-  mode '0750'
+git "/var/www/vhosts/demo.typo3.org/www" do
+  repository "git://git.typo3.org/Sites/DemoTypo3Org.git"
+  action :sync
+  enable_submodules true
   user 'demotypo3org'
   group 'www-data'
-  action :create
-  content <<-EOF
-RewriteEngine on
-RewriteCond %{REQUEST_FILENAME} !time.php
-RewriteCond %{REQUEST_FILENAME} !index.php
-RewriteRule .* index.php?url=$0 [QSA,L]
-  EOF
 end
+
