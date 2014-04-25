@@ -30,5 +30,5 @@ include_recipe "site-demotypo3org::php5-fpm"
 include_recipe "site-demotypo3org::nginx"
 
 include_recipe "site-demotypo3org::demo-landing-page"
-include_recipe "site-demotypo3org::demo-cms-distributions"
-include_recipe "site-demotypo3org::monitoring"
+include_recipe "site-demotypo3org::demo-distributions"
+include_recipe "site-demotypo3org::demo-monitoring"
