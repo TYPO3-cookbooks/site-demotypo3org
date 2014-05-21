@@ -46,6 +46,10 @@ chmod -R 750 <%= @document_root %>/typo3conf
 chown -R root:www-data <%= @document_root %>/{fileadmin,typo3conf,uploads*}
 
 ##########
+echo "Fixing ImageCreation"
+chown -R <%= @user %>:www-data <%= @documentRoot %>/fileadmin/_processed_
+
+##########
 echo "Resetting database..."
 masterDatabase=ms<%= @database %>
 masterDumpFile=/var/www/vhosts/ms.<%= @host %>/ms<%= @database %>.sql
