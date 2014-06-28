@@ -1,5 +1,9 @@
 #!/bin/bash
 
+#
+# Created by Chef; Don't Change it manually
+#
+
 # Security stop
 echo "Remove me if you can!"
 exit -1
