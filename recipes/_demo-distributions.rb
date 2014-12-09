@@ -180,15 +180,15 @@ distributions.each_with_index do |distribution, index|
 
     # true means mater
     if stage.length == 0
-      template_source = "reset-#{distribution[:type]}.sh"
+      template_source = "reset-#{distribution[:type]}.bash"
       database_master = "ms#{database}"
       password_master = node[:mysql][:users][database_master][:password]
     else
-      template_source = "reset-#{distribution[:type]}-ms.sh"
+      template_source = "reset-#{distribution[:type]}-ms.bash"
       password_master = ""
     end
 
-    template "/root/#{host}.reset.sh" do
+    template "/root/#{host}.reset.bash" do
       source template_source
       mode "0700"
       variables(
@@ -207,7 +207,7 @@ distributions.each_with_index do |distribution, index|
     if stage.length == 0
       cron "reset-demo-#{host}" do
         minute increment
-        command "/root/#{host}.reset.sh > /var/log/#{host}.log"
+        command "/root/#{host}.reset.bash > /var/log/#{host}.log"
       end
     end
 

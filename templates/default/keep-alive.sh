@@ -17,7 +17,7 @@ do
     content=`curl -s -L http://introduction.cms.demo.typo3.org$i | grep "Powered by"`
     if [ -z "$content" ]; then
         echo "Empty content for $i. Resetting website..."
-        $home/introduction.cms.demo.typo3.org.reset.sh
+        $home/introduction.cms.demo.typo3.org.reset.bash
 
         # Log incident
         fileName=keep-alive-incident-`date +"%m-%d-%y-%T"`

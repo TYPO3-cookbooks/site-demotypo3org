@@ -1,10 +1,9 @@
 #!/bin/bash
 
-##########
-
+# Define variables
 masterDocumentRoot=/var/www/vhosts/ms.<%= @host %>/www
 copyDocumentRoot=/var/www/vhosts/<%= @host %>/www.copy
-obsoletedDocumentRoot=/var/www/vhosts/<%= @host %>/www.obsolete
+obsoletedDocumentRoot=/var/www/vhosts/<%= @host %>/www.obsolete # the next instance to be dropped.
 
 echo "Resetting file structure..."
 if [ ! -f $copyDocumentRoot ];
@@ -38,16 +37,14 @@ cp /root/AdditionalConfiguration.php /var/www/vhosts/<%= @host %>/www/typo3conf/
 ##########
 echo "Setting permission for installation..."
 chown -R <%= @user %>:www-data <%= @document_root %>
+chmod -R 770 <%= @document_root %>/fileadmin/_processed_
 #chmod -R 770 <%= @document_root %>/{fileadmin,typo3conf,typo3temp,uploads}
 
 ##########
 echo "Restricting permission..."
-chmod -R 750 <%= @document_root %>/typo3conf
+chmod -R 750 <%= @document_root %>/typo3conf/
 chown -R root:www-data <%= @document_root %>/{fileadmin,typo3conf,uploads*}
-
-##########
-echo "Fixing ImageCreation"
-chown -R <%= @user %>:www-data <%= @documentRoot %>/fileadmin/_processed_
+chown -R <%= @user %>:www-data <%= @document_root %>/fileadmin/_processed_
 
 ##########
 echo "Resetting database..."
@@ -74,32 +71,3 @@ rm -rf $obsoletedDocumentRoot
 
 echo "Script ended at `date +'%m/%d/%y @ %H:%M'`"
 exit $?
-
-
-
-
-
-
-
-
-
-
-
-
-########## OBSOLETE CODE ##########
-#echo "Adding 403 page..."
-#cp /root/403.html <%= @document_root %>
-#chmod 755 <%= @document_root %>/403.html
-
-##########
-#echo "Blocking website except from localhost..."
-
-# Get public ip of server
-#ip=`tail -n 1 /etc/hosts | awk '{print $1}'`
-#echo "order deny,allow" >> <%= @document_root %>/.htaccess
-#echo "deny from all" >> <%= @document_root %>/.htaccess
-#echo "allow from $ip" >> <%= @document_root %>/.htaccess
-
-##########
-#echo "Allowing website to the world wide web..."
-#head -n -3 <%= @document_root %>/.htaccess > <%= @document_root %>/.htaccess2 ; mv <%= @document_root %>/.htaccess2 <%= @document_root %>/.htaccess

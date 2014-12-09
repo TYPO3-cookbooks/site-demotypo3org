@@ -36,4 +36,3 @@ cron "keep-alive" do
   minute "5-59"
   command "/root/keep-alive.sh > /dev/null"
 end
-
