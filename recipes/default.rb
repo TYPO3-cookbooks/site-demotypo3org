@@ -17,15 +17,15 @@
 # limitations under the License.
 #
 
-# Library
-include_recipe "site-demotypo3org::base"
-include_recipe "site-demotypo3org::iptables"
-#include_recipe "site-demotypo3org::mysql"
-include_recipe "site-demotypo3org::php5"
-include_recipe "site-demotypo3org::php5-fpm"
-include_recipe "composer"
-include_recipe "site-demotypo3org::nginx"
 
-include_recipe "site-demotypo3org::demo-landing-page"
-#include_recipe "site-demotypo3org::demo-distributions"
-include_recipe "site-demotypo3org::demo-monitoring"
+include_recipe "#{cookbook_name}::_base"
+include_recipe "#{cookbook_name}::_iptables"
+include_recipe "#{cookbook_name}::_mysql"
+include_recipe "#{cookbook_name}::_php5"
+include_recipe "#{cookbook_name}::_php5-fpm"
+include_recipe "composer"
+include_recipe "#{cookbook_name}::_nginx"
+
+include_recipe "#{cookbook_name}::_demo-landing-page"
+include_recipe "#{cookbook_name}::_demo-distributions"
+include_recipe "#{cookbook_name}::_demo-monitoring"

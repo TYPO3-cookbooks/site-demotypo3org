@@ -5,30 +5,6 @@ echo "Remove me if you can!"
 exit -1
 
 ##########
-echo "Downloading distribution if necessary"
-
-# Delete distribution if older than a day for saving bandwidth
-find /tmp -type f -mtime +1 -name "current.tgz" -exec rm {} \;
-
-# Move to the temporary directory
-cd /tmp
-
-# If distribution file does not exist, download it.
-if [ ! -f current.tgz ];
-then
-    # Download distribution
-    wget http://get.typo3.org/current -O current.tgz
-
-    # Update time of the file
-    touch current.tgz
-fi
-
-##########
-echo "Extract distribution..."
-cd /tmp
-tar -xzf current.tgz
-
-##########
 echo "Resetting file structure..."
 rm -rf <%= @document_root %>
 mv /tmp/typo3_src* <%= @document_root %>
@@ -55,4 +31,3 @@ echo "Next step is to open http://ms.<%= @distribution_name %>.cms.typo3.org"
 #done
 
 exit $?
-
