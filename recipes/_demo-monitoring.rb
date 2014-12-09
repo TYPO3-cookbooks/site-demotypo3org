@@ -27,12 +27,12 @@ directory "/var/log/demo" do
   action :create
 end
 
-template "/root/keep-alive.sh" do
-  source "keep-alive.sh"
+template "/root/keep-alive.bash" do
+  source "keep-alive.bash"
   mode "0700"
 end
 
 cron "keep-alive" do
   minute "5-59"
-  command "/root/keep-alive.sh > /dev/null"
+  command "/root/keep-alive.bash > /dev/null"
 end
