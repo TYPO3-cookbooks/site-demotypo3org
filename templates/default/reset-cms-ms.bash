@@ -14,7 +14,7 @@ mysql -u root -p<%= @password_root %> -e "DROP DATABASE <%= @database %>; CREATE
 
 ##########
 echo "Downloading distribution"
-$composer create-project typo3/cms-base-distribution <%= @document_root %>
+$composer create-project typo3/cms-base-distribution --stability dev --keep-vcs <%= @document_root %>
 touch <%= @document_root %>/FIRST_INSTALL
 
 ##########
@@ -22,11 +22,12 @@ echo "Resetting file permission..."
 chown -R <%= @user %>:www-data <%= @document_root %>
 
 echo "Done!"
+echo ""
 echo "Next step is to enable Virtual Host:"
-echo "ngxensite ms.introduction.cms.demo.typo3.org"
-echo "Open the browser:"
-echo "http://ms.<%= @distribution_name %>.cms.demo.typo3.org"
+echo "ngxensite ms.<%= @domain %>; service nginx reload"
+echo "http://ms.<%= @domain %>"
+echo ""
 echo "Pay attention chef-client will not work until:"
-echo "ngxdissite ms.<%= @distribution_name %>.cms.demo.typo3.org"
+echo "ngxdissite ms.<%= @domain %>; service nginx reload"
 
 exit $?

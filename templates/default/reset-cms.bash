@@ -36,14 +36,20 @@ cp /root/AdditionalConfiguration.php /var/www/vhosts/<%= @host %>/www/typo3conf/
 
 ##########
 echo "Setting permission for installation..."
-chown -R <%= @user %>:www-data <%= @document_root %>
-chmod -R 770 <%= @document_root %>/fileadmin/_processed_
+
+chmod -R 770 <%= @document_root %>/typo3temp
+chmod -R 750 <%= @document_root %>/typo3conf
 #chmod -R 770 <%= @document_root %>/{fileadmin,typo3conf,typo3temp,uploads}
 
-##########
-echo "Restricting permission..."
-chmod -R 750 <%= @document_root %>/typo3conf/
+chown -R <%= @user %>:www-data <%= @document_root %>
 chown -R root:www-data <%= @document_root %>/{fileadmin,typo3conf,uploads*}
+
+# _processed_ directory
+if [ ! -d <%= @document_root %>/fileadmin/_processed_ ];
+  then
+  mkdir <%= @document_root %>/fileadmin/_processed_
+fi
+chmod -R 770 <%= @document_root %>/fileadmin/_processed_
 chown -R <%= @user %>:www-data <%= @document_root %>/fileadmin/_processed_
 
 ##########

@@ -21,7 +21,7 @@ packages = [
   'php5-mysql',
   'php5-curl',
   'php5-gd',
-  'php5-adodb',
+  #'php5-adodb',
   'php5-mcrypt',
   'php5-sqlite',
   'php5-xsl',

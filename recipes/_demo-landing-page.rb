@@ -99,4 +99,3 @@ git "/var/www/vhosts/demo.typo3.org/www" do
   user 'demotypo3org'
   group 'www-data'
 end
-

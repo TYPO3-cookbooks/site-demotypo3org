@@ -23,12 +23,20 @@ distributions = [
     :name => 'introduction',
     :domain => 'introduction.cms.demo.typo3.org',
     :type => 'cms',
+    :stability => 'stable',
     :directories => %w(log www)
   }, {
     :name => 'neos',
     :domain => 'neos.demo.typo3.org',
     :type => 'neos',
+    :stability => 'stable',
     :directories => %w(log shared releases/current/Web)
+  }, {
+    :name => 'cms70',
+    :domain => 'cms70.demo.typo3.org',
+    :type => 'cms',
+    :stability => 'dev',
+    :directories => %w(log www)
   }
 ]
 
@@ -188,17 +196,20 @@ distributions.each_with_index do |distribution, index|
       password_master = ""
     end
 
+    # Reset script
     template "/root/#{host}.reset.bash" do
       source template_source
       mode "0700"
       variables(
         :distribution_name => distribution[:name],
+        :domain => distribution[:domain],
         :document_root => "/var/www/vhosts/#{host}/www",
         :host => host,
         :database => database,
         :password => node[:mysql][:users][database][:password],
         :password_master => password_master,
         :password_root => node['mysql']['server_root_password'],
+        :stability => distribution[:stability],
         :user => user
       )
     end
