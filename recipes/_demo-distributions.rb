@@ -20,8 +20,8 @@ mysql_connection_info = {:host => "localhost", :username => 'root', :password =>
 
 distributions = [
   {
-    :name => 'introduction',
-    :domain => 'introduction.cms.demo.typo3.org',
+    :name => 'cms62',
+    :domain => 'cms62.demo.typo3.org',
     :type => 'cms',
     :stability => 'stable',
     :directories => %w(log www)

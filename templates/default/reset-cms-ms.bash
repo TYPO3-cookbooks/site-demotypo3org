@@ -14,7 +14,7 @@ mysql -u root -p<%= @password_root %> -e "DROP DATABASE <%= @database %>; CREATE
 
 ##########
 echo "Downloading distribution"
-$composer create-project typo3/cms-base-distribution --stability dev --keep-vcs <%= @document_root %>
+$composer create-project typo3/cms-base-distribution --stability <%= @stability %> --keep-vcs <%= @document_root %>
 touch <%= @document_root %>/FIRST_INSTALL
 
 ##########
