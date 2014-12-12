@@ -11,7 +11,7 @@ composer="/usr/local/bin/composer"
 echo "Resetting file structure and setting up permission..."
 applicationPath=/var/www/vhosts/<%= @host %>/releases/current
 rm -rf $applicationPath
-mysql -u root -p<%= @password_root %> -e "DROP DATABASE <%= @database %>; CREATE DATABASE <%= @database %>";
+mysql -u root -p<%= @password_root %> -e "DROP DATABASE <%= @database %>; CREATE DATABASE <%= @database %> CHARACTER SET utf8 COLLATE utf8_general_ci";
 
 ##########
 echo "Downloading distribution"
