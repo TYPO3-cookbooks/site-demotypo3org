@@ -1,5 +1,5 @@
 server {
-        listen  80;
+        listen  [::]:80;
 
         set $domain "<%= @domain %>";
         set $application_path "/var/www/vhosts/<%= @domain %>/releases/current";
