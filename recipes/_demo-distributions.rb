@@ -26,14 +26,20 @@ distributions = [
     :stability => 'stable',
     :directories => %w(log www)
   }, {
-    :name => 'neos',
-    :domain => 'neos.demo.typo3.org',
-    :type => 'neos',
-    :stability => 'stable',
-    :directories => %w(log shared releases/current/Web)
-  }, {
     :name => 'cms70',
     :domain => 'cms70.demo.typo3.org',
+    :type => 'cms',
+    :stability => 'dev',
+    :directories => %w(log www)
+  }, {
+    :name => 'cmsnext',
+    :domain => 'cms-next.demo.typo3.org',
+    :type => 'cms',
+    :stability => 'dev',
+    :directories => %w(log www)
+  }, {
+    :name => 'cmsmaster',
+    :domain => 'cms-master.demo.typo3.org',
     :type => 'cms',
     :stability => 'dev',
     :directories => %w(log www)
