@@ -1,6 +1,11 @@
 server {
         listen  80;
 
+        <% if @redirect %>
+        # Redirect as we want it!
+        rewrite ^ $scheme://<%= @redirect %>$request_uri? permanent;
+        <% end %>
+
         set $domain "<%= @domain %>";
         set $application_path "/var/www/vhosts/<%= @domain %>/releases/current";
         set $phpFpmPort <%= @fpm_port %>;

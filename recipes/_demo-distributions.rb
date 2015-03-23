@@ -26,6 +26,7 @@ distributions = [
     :stability => 'stable',
     :directories => %w(log www)
   }, {
+    :redirect => 'cms-next.demo.typo3.org',
     :name => 'cms70',
     :domain => 'cms70.demo.typo3.org',
     :type => 'cms',
@@ -104,6 +105,7 @@ distributions.each_with_index do |distribution, index|
       mode 0644
       variables(
         :domain => "#{host}",
+        :redirect => distribution[:redirect],
         :fpm_port => "#{fpm_port}"
       )
     end
