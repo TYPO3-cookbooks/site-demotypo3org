@@ -50,6 +50,7 @@ if [ ! -d <%= @document_root %>/fileadmin/_processed_ ];
   mkdir <%= @document_root %>/fileadmin/_processed_
 fi
 chmod -R 770 <%= @document_root %>/fileadmin/_processed_
+chmod -R 770 <%= @document_root %>/typo3conf/PackageStates.php
 chown -R <%= @user %>:www-data <%= @document_root %>/fileadmin/_processed_
 
 ##########

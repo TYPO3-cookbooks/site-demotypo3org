@@ -2,7 +2,7 @@ server {
         listen  80;
 
         <% if @redirect %>
-        # Redirect as we want it!
+        # Redirect as we want it so!
         rewrite ^ $scheme://<%= @redirect %>$request_uri? permanent;
         <% end %>
 
