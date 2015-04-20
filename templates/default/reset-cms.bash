@@ -65,6 +65,8 @@ fi
 mysql -u root -p<%= @password_root %> -e "DROP DATABASE <%= @database %>; CREATE DATABASE <%= @database %>";
 mysql -u root -p<%= @password_root %> <%= @database %> < $masterDumpFile;
 mysql -u root -p<%= @password_root %> <%= @database %> -e "UPDATE be_users SET password='password'";
+mysql -u root -p<%= @password_root %> <%= @database %> -e "TRUNCATE TABLE cf_extbase_object;";
+mysql -u root -p<%= @password_root %> <%= @database %> -e "TRUNCATE TABLE cf_extbase_reflection;";
 
 ##########
 echo "Cleaning up..."
